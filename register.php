@@ -23,5 +23,17 @@
 		exit();
 	}
 
-	echo json_encode(array('success' => true, 'code' => 0));
+	require_once('backend/db/connect.php');	
+	require_once('backend/db/users_queries.php');
+
+	db_connect();
+
+	if (is_user_registered($email)) {
+		echo json_encode(array('success' => false, 'code' => 4));
+		exit();
+	}
+	
+	$id = register_user($username, $email, $pwd, $role);
+
+	echo json_encode(array('success' => true, 'id' => $id));
 ?>
