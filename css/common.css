@@ -1,0 +1,37 @@
+body {
+	padding: 0;
+	margin: 0;
+	font-family: tahoma, verdana, arial, sans;
+}
+
+.navbar {
+	min-height: 50px;
+	margin-bottom: 20px;
+	width: 100%;
+	background-color: #435274;
+	border-bottom: solid 1px #464769;
+	color: #fff;
+}
+
+.navbar_container {
+	padding-top: 14px;
+	overflow: hidden;
+}
+
+.navbar_left {
+	font-weight: bold;
+	width: 140px;
+	float: left;
+}
+
+.navbar_right {
+	width: 200px;
+	float: right;
+	text-align: right;
+}
+
+.page_container {
+	padding: 0;
+	margin: 0 auto;
+	width: 800px;
+}
