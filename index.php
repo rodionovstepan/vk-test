@@ -12,15 +12,20 @@
 						AOS | VK Test
 					</div>
 					<div class="navbar_right">
-						Test app
+						Abstract Order System
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="page_container" id="content">
 			<div class="page_welcome">
-				Welcome!
+				<div class="page_welcome_title">
+					Welcome to AOS!
+				</div>
 			</div>
+		</div>
+		<div class="page_footer">
+			<a href="https://vk.com/rodionovstepan" target="_blank">Rodionov Stepan</a> &copy; 2014
 		</div>
 	</body>
 </html>

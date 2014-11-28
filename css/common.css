@@ -2,6 +2,7 @@ body {
 	padding: 0;
 	margin: 0;
 	font-family: tahoma, verdana, arial, sans;
+	font-size: 12px;
 }
 
 .navbar {
@@ -14,7 +15,7 @@ body {
 }
 
 .navbar_container {
-	padding-top: 14px;
+	padding-top: 18px;
 	overflow: hidden;
 }
 
@@ -34,4 +35,23 @@ body {
 	padding: 0;
 	margin: 0 auto;
 	width: 800px;
+}
+
+.page_welcome {
+	height: 300px;
+	padding: 40px;
+	background-color: #eaeaea;
+	border: solid 1px #ccc;
+	border-radius: 5px;
+}
+
+.page_welcome_title {
+	text-align: center;
+	font-size: 24px;
+}
+
+.page_footer {
+	margin-top: 20px;
+	font-size: 11px;
+	text-align: center;
 }
