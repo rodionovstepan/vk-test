@@ -38,10 +38,10 @@
 							<input type="text" name="email" placeholder="Электронная почта">
 						</div>
 						<div class="form_item">
-							<input type="password" name="password" placeholder="Пароль">
+							<input type="password" name="pwd" placeholder="Пароль">
 						</div>
 						<div class="form_item">
-							<input type="password" name="password_confirm" placeholder="Пароль еще раз">
+							<input type="password" name="repwd" placeholder="Пароль еще раз">
 						</div>
 						<div class="form_item">
 							<select name="role">
