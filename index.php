@@ -31,26 +31,27 @@
 						<b>Присоединяйся</b>, пройдя очень простую процедуру регистрации:
 					</div>
 					<div class="page_welcome_register_form">
+						<div class="form_validation" style="display:none;"></div>
 						<div class="form_item">
-							<input type="text" name="username" placeholder="Имя пользователя">
+							<input type="text" id="username" name="username" placeholder="Имя пользователя">
 						</div>
 						<div class="form_item">
-							<input type="text" name="email" placeholder="Электронная почта">
+							<input type="text" id="email" name="email" placeholder="Электронная почта">
 						</div>
 						<div class="form_item">
-							<input type="password" name="pwd" placeholder="Пароль">
+							<input type="password" id="pwd" name="pwd" placeholder="Пароль">
 						</div>
 						<div class="form_item">
-							<input type="password" name="repwd" placeholder="Пароль еще раз">
+							<input type="password" id="repwd" name="repwd" placeholder="Пароль еще раз">
 						</div>
 						<div class="form_item">
-							<select name="role">
+							<select name="role" id="role">
 								<option value="1">Я - заказчик</option>
 								<option value="2">Я - исполнитель</option>
 							</select>
 						</div>
 						<div class="form_item">
-							<button type="button" class="main_button">Зарегистрироваться</button>
+							<button type="button" class="main_button" onclick="aos.register();">Зарегистрироваться</button>
 						</div>
 					</div>
 				</div>
@@ -61,5 +62,7 @@
 		</div>
 
 		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/register.js"></script>
+		<script type="text/javascript" src="js/lang.js"></script>
 	</body>
 </html>
