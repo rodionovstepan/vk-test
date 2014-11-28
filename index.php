@@ -59,5 +59,7 @@
 		<div class="page_footer">
 			&copy; 2014
 		</div>
+
+		<script type="text/javascript" src="js/jquery.min.js"></script>
 	</body>
 </html>
