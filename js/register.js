@@ -26,5 +26,30 @@ aos.register = function() {
 		return false;
 	}
 
-	
+	if (pwd.length < 5) {
+		showValidation(aos.lang.small_pwds);
+		return false;
+	}
+
+	if (pwd !== repwd) {
+		showValidation(aos.lang.pwds_not_equals);
+		return false;
+	}
+
+	$.post('/register.php', {
+		username: username,
+		email: email,
+		pwd: pwd,
+		repwd: repwd,
+		role: role
+	}, function (data) {
+		if (data.success === true) {
+			location.reload();
+			return;
+		}
+
+		if (data.code === 4) {
+			showValidation(aos.lang.user_already_registered);
+		}
+	});
 };
