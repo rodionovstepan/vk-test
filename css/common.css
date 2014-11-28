@@ -38,16 +38,53 @@ body {
 }
 
 .page_welcome {
-	height: 300px;
 	padding: 40px;
 	background-color: #eaeaea;
 	border: solid 1px #ccc;
 	border-radius: 5px;
+	text-align: center;
 }
 
 .page_welcome_title {
-	text-align: center;
 	font-size: 24px;
+}
+
+.page_welcome_desc {
+	margin-top: 20px;
+}
+
+.page_welcome_register {
+	margin-top: 30px;
+}
+
+.page_welcome_register_form {
+	margin-top: 15px;
+}
+
+.form_item {
+	margin: 0 auto 10px auto;
+	width: 220px;
+}
+
+.form_item input,select,button {
+	padding: 5px 6px;
+	width: 100%;
+	-moz-box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+}
+
+.main_button {
+	background-color: #536b9e;
+	border: solid 1px #4f5f94;
+	color: #fff;
+	cursor: pointer;
+	padding: 7px;
+	outline: none;
+	border-radius: 2px;
+}
+
+.main_button:hover {
+	background-color: #6981b5;
 }
 
 .page_footer {
