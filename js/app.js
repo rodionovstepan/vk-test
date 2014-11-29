@@ -17,12 +17,12 @@ aos.isValidOrderPrice = function(price) {
 	return re.test(price);
 };
 
-aos.decrement = function(id, val) {
+aos.decrement = function(id) {
 	var el = document.getElementById(id);
 	if (el != undefined) {
 		var count = parseInt(el.innerText);
-		if (!isNaN(count) && count > 0) {
-			el.innerText = val == undefined ? count-1 : val;
+		if (!isNaN(count)) {
+			el.innerText = count-1;
 		}
 	}
 };
@@ -30,9 +30,13 @@ aos.decrement = function(id, val) {
 aos.increment = function(id, val) {
 	var el = document.getElementById(id);
 	if (el != undefined) {
-		var count = parseInt(el.innerText);
-		if (!isNaN(count) && count > 0) {
-			el.innerText = val == undefined ? count+1 : val;
+		if (val != undefined) {
+			el.innerText = val;
+		} else {
+			var count = parseInt(el.innerText);
+			if (!isNaN(count)) {
+				el.innerText = count+1;
+			}
 		}
 	}
 };
