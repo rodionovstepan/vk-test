@@ -17,6 +17,26 @@ aos.isValidOrderPrice = function(price) {
 	return re.test(price);
 };
 
+aos.decrement = function(id) {
+	var el = document.getElementById(id);
+	if (el != undefined) {
+		var count = parseInt(el.innerText);
+		if (!isNaN(count) && count > 0) {
+			el.innerText = count-1;
+		}
+	}
+};
+
+aos.increment = function(id) {
+	var el = document.getElementById(id);
+	if (el != undefined) {
+		var count = parseInt(el.innerText);
+		if (!isNaN(count) && count > 0) {
+			el.innerText = count+1;
+		}
+	}
+};
+
 aos.register = function() {
 	var username = $('#username').val(),
 		email = $('#email').val(),
@@ -146,7 +166,7 @@ aos.addOrder = function() {
 		return false;
 	}
 
-	var pp = parseFloat(price);
+	var pp = parseFloat(price.replace(',', '.'));
 	if (!aos.isValidOrderPrice(price) || isNaN(pp)) {
 		aos.showFormValidation(aos.lang.invalid_order_price);
 		return false;
@@ -189,8 +209,14 @@ aos.cancelOrder = function(el, id) {
 		oid: id
 	}, function(data) {
 		if (data.success) {
+			aos.decrement('customer_order_count');
+
 			$('#order' + id).fadeOut(function() {
 				$(this).remove();
+
+				if ($('.order').length === 0) {
+					$('#page_content_wrapper').text(aos.lang.no_active_orders);
+				}
 			});
 		} else if (el != undefined) {
 			var $el = $(el);

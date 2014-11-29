@@ -19,3 +19,4 @@ aos.lang.invalid_order_price = 'Указана некорректная стои
 aos.lang.negative_order_price = 'Стоимость заказа должна быть больше 0';
 aos.lang.cannot_cancel_order = 'Не удалось удалить заказ';
 aos.lang.cancel_order = 'Удалить заказ';
+aos.lang.no_active_orders = 'Нет активных заказов';

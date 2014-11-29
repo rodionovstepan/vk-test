@@ -223,8 +223,11 @@ body {
 .order {
 	background-color: #efefef;
 	border-radius: 3px;
-	margin-bottom: 20px;
 	padding: 10px;
+}
+
+.order:not(:last-of-type) {
+	margin-bottom: 20px;
 }
 
 .order:hover {

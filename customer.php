@@ -66,8 +66,8 @@
 							<b><?php echo $context_user_name ?></b>
 						</div>
 						<div>
-							Баланс: <?php echo $user_info['balance'] ?><br/><br/>
-							Опубликовано заказов: <?php echo $user_info['order_count'] ?>
+							Баланс: <?= $user_info['balance'] ?><br/><br/>
+							Всего заказов: <span id="customer_order_count"><?= $user_info['order_count'] ?></span><br/><br/>
 						</div>
 					</div>
 					<div class="page_menu">
@@ -94,15 +94,19 @@
 							}
 						?>
 					</div>
-					<div>
+					<div id="page_content_wrapper">
 						<?php
 							if ($add_order) {
 								require 'html/new_order_form.html';
 							} else {
 								require_once 'backend/render.php';
 
-								foreach ($orders as $order) {
-									render_order($order, true);
+								if (count($orders)) {
+									foreach ($orders as $order) {
+										render_order($order, true);
+									}
+								} else {
+									echo 'Нет активных заказов';
 								}
 							}
 						?>
