@@ -9,17 +9,21 @@
 
 	$username = trim(mysql_real_escape_string($_POST['username']));
 	$email = trim(mysql_real_escape_string($_POST['email']));
-	$pwd = mysql_real_escape_string($_POST['pwd']);
-	$repwd = mysql_real_escape_string($_POST['repwd']);
+	$pwd = $_POST['pwd'];
+	$repwd = $_POST['repwd'];
 	$role = intval($_POST['role']);
 
+	if (strlen($username) == 0) {
+		echo json_encode(array('success' => false, 'code' => 2))
+	}
+
 	if (strlen($pwd) < 5 || $pwd != $repwd) {
-		echo json_encode(array('success' => false, 'code' => 2));
+		echo json_encode(array('success' => false, 'code' => 3));
 		exit();
 	}
 
 	if ($role > 2 || $role < 1) {
-		echo json_encode(array('success' => false, 'code' => 3));
+		echo json_encode(array('success' => false, 'code' => 4));
 		exit();
 	}
 
@@ -29,7 +33,7 @@
 	db_connect();
 
 	if (is_user_registered($email)) {
-		echo json_encode(array('success' => false, 'code' => 4));
+		echo json_encode(array('success' => false, 'code' => 5));
 		exit();
 	}
 
