@@ -42,4 +42,24 @@
 		return $id;
 	}
 
+	function cancel_order($customer_id, $order_id) {
+		mysql_query("START TRANSACTION");
+
+		$dec = mysql_query(
+			"UPDATE users SET order_count = order_count-1 WHERE id = " . $customer_id . ";"
+		);
+
+		$cancel = mysql_query(
+			"UPDATE orders SET is_deleted = TRUE WHERE customer_id = " . $customer_id . " AND id = " . $order_id . ";"
+		);
+
+		if (!$dec || !$cancel || !mysql_affected_rows()) {
+			mysql_query("ROLLBACK");
+			return 0;
+		}
+
+		mysql_query("COMMIT");
+		return 1;
+	}
+
 ?>

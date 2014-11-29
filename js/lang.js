@@ -17,3 +17,5 @@ aos.lang.order_content_is_required = 'Необходимо описание за
 aos.lang.order_price_is_required = 'Необходимо указать цену за выполнение заказа';
 aos.lang.invalid_order_price = 'Указана некорректная стоимость заказа. Наша система позволяет использовать максимум 15 знаков до разделителя и 2 знака после';
 aos.lang.negative_order_price = 'Стоимость заказа должна быть больше 0';
+aos.lang.cannot_cancel_order = 'Не удалось удалить заказ';
+aos.lang.cancel_order = 'Удалить заказ';

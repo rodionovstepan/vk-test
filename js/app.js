@@ -178,3 +178,27 @@ aos.addOrder = function() {
 	});
 
 };
+
+aos.cancelOrder = function(el, id) {
+	id = parseInt(id);
+	if (id <= 0)
+		return;
+
+	$.post('orders.php', {
+		act: 'cancel_order',
+		oid: id
+	}, function(data) {
+		if (data.success) {
+			$('#order' + id).fadeOut(function() {
+				$(this).remove();
+			});
+		} else if (el != undefined) {
+			var $el = $(el);
+
+			$el.text(aos.lang.cannot_cancel_order);
+			setTimeout(function() {
+				$el.text(aos.lang.cancel_order);
+			}, 2000);
+		}
+	});
+};
