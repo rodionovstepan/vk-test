@@ -9,6 +9,7 @@
 
 	require_once('backend/db/connect.php');
 	require_once('backend/db/users_queries.php');
+	require_once('backend/db/orders_queries.php');
 
 	db_connect();
 
@@ -18,7 +19,7 @@
 		exit();
 	}
 
-
+	$orders = get_customer_active_orders($context_user_id);
 
 ?>
 <!doctype html>
@@ -62,6 +63,13 @@
 				<div class="page_content">
 					<div class="page_content_title">
 						<b>Список твоих активных заказов</b>
+					</div>
+					<div>
+						<?php
+							if (count($orders) == 0) {
+								echo 'На данный момент у тебя нет активных заказов';
+							}
+						?>
 					</div>
 				</div>
 			</div>
