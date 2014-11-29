@@ -94,6 +94,9 @@ body {
 	padding: 7px;
 	outline: none;
 	border-radius: 2px;
+	display: block;
+	text-align: center;
+	text-decoration: none;
 }
 
 .def_button {
@@ -104,6 +107,9 @@ body {
 	padding: 7px;
 	outline: none;
 	border-radius: 2px;
+	display: block;
+	text-align: center;
+	text-decoration: none;
 }
 
 .def_button:hover {

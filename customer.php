@@ -5,7 +5,19 @@
 	if (!isset($context_user_id)) {
 		header('Location: /');
 		exit();
-	} 
+	}
+
+	$user_id = $context_user_id;
+	if (!empty($_GET['id'])) {
+		$id = intval($_GET['id']);
+
+		if ($id > 0) {
+			$user_id = $id;
+		}
+	}
+
+
+	$add_order = $_GET['act'] == 'add_order';
 
 	require_once('backend/db/connect.php');
 	require_once('backend/db/users_queries.php');
@@ -57,9 +69,14 @@
 						</div>
 					</div>
 					<div class="page_menu">
-						<div class="page_menu_item">
-							<button type="button" class="main_button menu_button">Создать заказ</button>
-						</div>
+						<?php 
+							if (!$add_order) {
+								echo '
+								<div class="page_menu_item">
+									<a href="#" class="main_button menu_button">Создать заказ</a>
+								</div>';
+							}
+						?>
 						<div  class="page_menu_item">
 							<button type="button" class="def_button menu_button">Пополнить баланс</button>
 						</div>
@@ -67,7 +84,13 @@
 				</div>
 				<div class="page_content">
 					<div class="page_content_title">
-						<b>Список твоих активных заказов</b>
+						<?php
+							if (!$add_order) {
+								echo '<b>Список твоих активных заказов</b>';
+							} else {
+								echo '<b>Добавление нового заказа</b>';
+							}
+						?>
 					</div>
 					<div>
 						<?php
