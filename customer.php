@@ -73,7 +73,7 @@
 							if (!$add_order) {
 								echo '
 								<div class="page_menu_item">
-									<a href="#" class="main_button menu_button">Создать заказ</a>
+									<a href="customer.php?act=add_order" class="main_button menu_button">Создать заказ</a>
 								</div>';
 							}
 						?>
@@ -102,5 +102,6 @@
 				</div>
 			</div>
 		</div>
+		<script type="text/javascript" src="js/customer.js"></script>
 	</body>
 </html>
