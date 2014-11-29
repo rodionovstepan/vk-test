@@ -23,8 +23,8 @@
 						<a href="/">AOS | VK Test</a>
 					</div>
 					<div class="navbar_right">
-						<a href="customer.php">
-							<?php echo $context_user_name ?>
+						<a href="logout.php">
+							Выход
 						</a>
 					</div>
 				</div>

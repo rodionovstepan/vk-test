@@ -1,3 +1,13 @@
+<?php
+
+	require_once('backend/context.php');
+
+	if (isset($context_user_role)) {
+		header('Location: ' . url_by_role($context_user_role));
+		exit();
+	}
+
+?>
 <!doctype html>
 <html>
 	<head>

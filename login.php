@@ -5,12 +5,6 @@
 
 	header('Content-Type: application/json;');
 
-	function url_by_role($role) {
-		return $role == CUSTOMER_ROLE
-			? 'customer.php'
-			: 'contractor.php';
-	}
-
 	if (isset($context_user_id) && isset($context_user_role)) {
 		echo json_encode(array(
 			'success' => true, 
