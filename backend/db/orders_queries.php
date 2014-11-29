@@ -50,7 +50,7 @@
 		);
 
 		$cancel = mysql_query(
-			"UPDATE orders SET is_deleted = TRUE WHERE customer_id = " . $customer_id . " AND id = " . $order_id . ";"
+			"UPDATE orders SET is_deleted = TRUE WHERE customer_id = " . $customer_id . " AND id = " . $order_id . " AND is_completed = FALSE;"
 		);
 
 		if (!$dec || !$cancel || !mysql_affected_rows()) {
