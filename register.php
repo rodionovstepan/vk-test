@@ -13,7 +13,7 @@
 	$repwd = mysql_escape_string($_POST['repwd']);
 	$role = intval($_POST['role']);
 
-	if ($pwd != $repwd) {
+	if (strlen($pwd) < 5 || $pwd != $repwd) {
 		echo json_encode(array('success' => false, 'code' => 2));
 		exit();
 	}
@@ -32,7 +32,7 @@
 		echo json_encode(array('success' => false, 'code' => 4));
 		exit();
 	}
-	
+
 	$id = register_user($username, $email, $pwd, $role);
 
 	echo json_encode(array('success' => true, 'id' => $id));

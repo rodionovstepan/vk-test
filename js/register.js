@@ -8,7 +8,7 @@ aos.register = function() {
 		role = $('#role').val();
 
 	var showValidation = function(msg) {
-		$('.form_validation').text(msg).show();
+		$('.form_validation').text(msg).fadeIn();
 	};
 
 	var validateEmail = function(email) { 
@@ -48,8 +48,12 @@ aos.register = function() {
 			return;
 		}
 
-		if (data.code === 4) {
-			showValidation(aos.lang.user_already_registered);
+		switch (data.code) {
+			case 1: showValidation(aos.lang.all_fields_are_required);
+			case 2: showValidation(aos.lang.invalid_pwds);
+			case 3: showValidation(aos.lang.invalid_role);
+			case 4: showValidation(aos.lang.user_already_registered);
+			default: showValidation(aos.lang.something_goes_wrong);
 		}
 	});
 };
