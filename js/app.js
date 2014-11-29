@@ -164,6 +164,17 @@ aos.addOrder = function() {
 		if (data.success) {
 			window.location = 'customer.php';
 		}
+
+		switch (data.code) {
+			case 1:
+				aos.showFormValidation(aos.lang.all_fields_are_required);
+				break;
+			case 2:
+				aos.showFormValidation(aos.lang.invalid_order_price);
+				break;
+			default:
+				aos.showFormValidation(aos.lang.something_goes_wrong);
+		}
 	});
 
 };
