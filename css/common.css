@@ -224,6 +224,7 @@ body {
 	background-color: #f7f7f7;
 	border-radius: 3px;
 	padding: 10px;
+	border: solid 1px #dadada;
 }
 
 .order:not(:last-of-type) {
@@ -237,7 +238,7 @@ body {
 .order_title {
 	margin-bottom: 10px;
 	padding-bottom: 5px;
-	border-bottom: solid 1px #ccc;
+	border-bottom: solid 1px #e2e2e2;
 }
 
 .order_content {
@@ -250,4 +251,12 @@ body {
 
 .order_price {
 	padding-top: 10px;
+}
+
+.order_danger {
+	border: solid 2px #c00;
+}
+
+.order_danger > .order_content {
+	color: #c00;
 }

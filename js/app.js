@@ -217,26 +217,34 @@ aos.addOrder = function() {
 
 };
 
+aos.orderFadeOut = function($order) {
+	$order.fadeOut(function() {
+		$order.remove();
+
+		if ($('.order').length === 0) {
+			$('#page_content_wrapper').text(aos.lang.no_active_orders);
+		}
+	})
+};
+
 aos.cancelOrder = function(el, id) {
 	$.post('orders.php', {
 		act: 'cancel_order',
 		oid: id
 	}, function(data) {
+		var $order = $('#order' + id);
+
 		if (data.success) {
 			aos.decrement('customer_order_count');
 			aos.increment('customer_balance', data.balance);
-
-			$('#order' + id).fadeOut(function() {
-				$(this).remove();
-
-				if ($('.order').length === 0) {
-					$('#page_content_wrapper').text(aos.lang.no_active_orders);
-				}
-			});
+			aos.orderFadeOut($order);
 		} else {
-			aos.showTempError(el, 
-				aos.lang.cannot_cancel_order,
-				aos.lang.cancel_order);
+			$order.addClass('order_danger');
+			$('.order_content', $order).text(aos.lang.cannot_cancel_order);
+
+			setTimeout(function() {
+				aos.orderFadeOut($order);
+			}, 5000);
 		}
 	});
 };
@@ -260,19 +268,19 @@ aos.takeOrder = function(el, id) {
 		act: 'take_order',
 		oid: id
 	}, function (data) {
+		var $order = $('#order' + id);
+
 		if (data.success) {
 			aos.increment('contractor_balance', data.balance);
 			aos.increment('contractor_order_count', data.ordercount);
-
-			$('#order' + id).fadeOut(function() {
-				$(this).remove();
-
-				if ($('.order').length === 0) {
-					$('#page_content_wrapper').text(aos.lang.no_active_orders);
-				}
-			});
+			aos.orderFadeOut($order);
 		} else {
-			alert('Nenene');
+			$order.addClass('order_danger');
+			$('.order_content', $order).text(aos.lang.cannot_take_order);
+
+			setTimeout(function() {
+				aos.orderFadeOut($order);
+			}, 5000);
 		}
 	});
 };
