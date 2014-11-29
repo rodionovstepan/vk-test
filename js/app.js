@@ -79,7 +79,8 @@ aos.register = function() {
 		return false;
 	}
 
-	$.post('/register.php', {
+	$.post('users.php', {
+		act: 'register',
 		username: username,
 		email: email,
 		pwd: pwd,
@@ -135,12 +136,14 @@ aos.login = function() {
 		return false;
 	}
 
-	$.post('login.php', {
+	$.post('users.php', {
+		act: 'login',
 		email: email,
 		pwd: pwd
 	}, function(data) {
 		if (data.success) {
 			window.location = data.url;
+			return;
 		}
 
 		switch (data.code) {
@@ -153,6 +156,8 @@ aos.login = function() {
 			case 3:
 				aos.showFormValidation(aos.lang.user_not_registered);
 				break;
+			default:
+				aos.showFormValidation(aos.lang.something_goes_wrong);
 		}
 	});
 };

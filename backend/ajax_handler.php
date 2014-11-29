@@ -20,8 +20,4 @@
 		exit();
 	}
 
-	if (empty($context_user_id) || empty($act)) {
-		invalid_request();
-	}
-
 ?>

@@ -17,8 +17,8 @@
 			"INSERT INTO users (username, email, password_hash, role) 
 			 VALUES ('" . $username . "', '" . $email . "', '" . $pwdhash . "', " . $role . ");");
 
-		if (!$result) {
-			die(mysql_error());
+		if (!$result || !mysql_affected_rows()) {
+			return 0;
 		}
 
 		return mysql_insert_id();

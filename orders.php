@@ -3,6 +3,11 @@
 	require_once('backend/ajax_handler.php');
 	require_once('backend/handlers/orders_handler.php');
 
+	if (empty($context_user_id)) {
+		invalid_request();
+		exit();
+	}
+
 	if ($act == 'add_order') {
 		$title = trim(mysql_real_escape_string(htmlspecialchars($_POST['title'])));
 		$content = trim(mysql_real_escape_string(htmlspecialchars($_POST['content'])));
