@@ -23,7 +23,7 @@
 		mysql_query("START TRANSACTION");
 
 		$update = mysql_query(
-			"UPDATE users SET order_count = order_count+1 WHERE id = " . $customer_id . ";"
+			"UPDATE users SET order_count = order_count+1, balance = balance-" . $price . " WHERE id = " . $customer_id . ";"
 		);
 
 		$insert = mysql_query(
@@ -46,7 +46,10 @@
 		mysql_query("START TRANSACTION");
 
 		$dec = mysql_query(
-			"UPDATE users SET order_count = order_count-1 WHERE id = " . $customer_id . ";"
+			"UPDATE users 
+			 SET order_count = order_count-1,
+			     balance = balance + (SELECT price FROM orders WHERE id = " . $order_id . ")
+			 WHERE id = " . $customer_id . ";"
 		);
 
 		$cancel = mysql_query(

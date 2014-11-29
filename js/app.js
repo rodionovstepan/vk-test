@@ -17,22 +17,22 @@ aos.isValidOrderPrice = function(price) {
 	return re.test(price);
 };
 
-aos.decrement = function(id) {
+aos.decrement = function(id, val) {
 	var el = document.getElementById(id);
 	if (el != undefined) {
 		var count = parseInt(el.innerText);
 		if (!isNaN(count) && count > 0) {
-			el.innerText = count-1;
+			el.innerText = val == undefined ? count-1 : val;
 		}
 	}
 };
 
-aos.increment = function(id) {
+aos.increment = function(id, val) {
 	var el = document.getElementById(id);
 	if (el != undefined) {
 		var count = parseInt(el.innerText);
 		if (!isNaN(count) && count > 0) {
-			el.innerText = count+1;
+			el.innerText = val == undefined ? count+1 : val;
 		}
 	}
 };
@@ -203,6 +203,9 @@ aos.addOrder = function() {
 			case 2:
 				aos.showFormValidation(aos.lang.invalid_order_price);
 				break;
+			case 3:
+				aos.showFormValidation(aos.lang.too_small_balance);
+				break;
 			default:
 				aos.showFormValidation(aos.lang.something_goes_wrong);
 		}
@@ -221,6 +224,7 @@ aos.cancelOrder = function(el, id) {
 	}, function(data) {
 		if (data.success) {
 			aos.decrement('customer_order_count');
+			aos.increment('customer_balance', data.balance);
 
 			$('#order' + id).fadeOut(function() {
 				$(this).remove();

@@ -22,3 +22,4 @@ aos.lang.cancel_order = 'Удалить заказ';
 aos.lang.no_active_orders = 'Нет активных заказов';
 aos.lang.inc_balance = 'Пополнить баланс';
 aos.lang.cannot_inc_balance = 'Произошла ошибка';
+aos.lang.too_small_balance = 'Вашего баланса не достаточно для создания такого заказа';

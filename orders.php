@@ -22,6 +22,7 @@
 
 	require_once('backend/db/connect.php');
 	require_once('backend/db/orders_queries.php');
+	require_once('backend/db/users_queries.php');
 
 	db_connect();
 
@@ -42,16 +43,26 @@
 
 		$price = floatval($price);
 
+		$user_info = get_user_info($context_user_id);
+		if ($user_info['balance'] < $price) {
+			echo json_encode(array('success' => false, 'code' => 3));
+			exit();
+		}
+
 		if (add_order($context_user_id, $context_user_name, $title, $content, $price)) {
 			echo json_encode(array('success' => true));
 		} else {
-			echo json_encode(array('success' => false, 'code' => 3));
+			echo json_encode(array('success' => false, 'code' => 4));
 		}
 	} else if ($_POST['act'] == 'cancel_order') {
 		$id = intval($_POST['oid']);
 
+		$result = cancel_order($context_user_id, $id);
+		$user_info = get_user_info($context_user_id);
+
 		echo json_encode(array(
-			'success' => cancel_order($context_user_id, $id))
+			'success' => $result,
+			'balance' => $user_info['balance'])
 		);
 	}
 
