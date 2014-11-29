@@ -39,7 +39,7 @@
 						<b>Присоединяйся</b>, пройдя очень простую процедуру регистрации:
 					</div>
 					<div class="page_welcome_form">
-						<div class="form_validation" style="display:none;"></div>
+						<div class="form_validation js_validation" style="display:none;"></div>
 						<div class="form_item">
 							<input type="text" id="username" name="username" placeholder="Имя пользователя">
 						</div>
@@ -73,7 +73,7 @@
 		</div>
 
 		<script type="text/javascript" src="js/jquery.min.js"></script>
-		<script type="text/javascript" src="js/app.js"></script>
 		<script type="text/javascript" src="js/lang.js"></script>
+		<script type="text/javascript" src="js/app.js"></script>
 	</body>
 </html>

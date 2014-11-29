@@ -74,6 +74,13 @@ body {
 	width: 380px;
 }
 
+.order_form_validation {
+	background-color: #EAAF96;
+	border: solid 1px #842E2E;
+	margin: 15px auto;
+	padding: 10px 5px;
+}
+
 .form_item {
 	margin: 0 auto 10px auto;
 	width: 220px;

@@ -1,12 +1,20 @@
 var aos = aos || {};
 
 aos.showFormValidation = function(msg) {
-	$('.form_validation').text(msg).fadeIn();
+	$('.js_validation').text(msg).fadeIn();
 };
 
 aos.isValidEmail = function(email) {
 	var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 	return re.test(email);
+};
+
+aos.isValidOrderPrice = function(price) {
+	if (typeof price !== 'string')
+		return false;
+
+	var re = /^\d{1,15}([\,\.]\d{1,2})?$/;
+	return re.test(price);
 };
 
 aos.register = function() {
@@ -112,4 +120,35 @@ aos.login = function() {
 				break;
 		}
 	});
+};
+
+aos.cancelOrder = function() {
+	window.location = 'customer.php';
+};
+
+aos.addOrder = function() {
+	var title = $('#order_title').val(),
+		content = $('#order_content').val(),
+		price = $('#order_price').val();
+
+	if (title.trim() == '') {
+		aos.showFormValidation(aos.lang.order_title_is_required);
+		return false;
+	}
+
+	if (content.trim() == '') {
+		aos.showFormValidation(aos.lang.order_content_is_required);
+		return false;
+	}
+
+	if (price.trim() == '') {
+		aos.showFormValidation(aos.lang.order_price_is_required);
+		return false;
+	}
+
+	if (!aos.isValidOrderPrice(price)) {
+		aos.showFormValidation(aos.lang.invalid_order_price);
+		return false;
+	}
+
 };

@@ -102,6 +102,8 @@
 				</div>
 			</div>
 		</div>
-		<script type="text/javascript" src="js/customer.js"></script>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/lang.js"></script>
+		<script type="text/javascript" src="js/app.js"></script>
 	</body>
 </html>
