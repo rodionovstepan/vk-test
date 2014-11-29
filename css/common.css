@@ -2,7 +2,7 @@ body {
 	padding: 0;
 	margin: 0;
 	font-family: tahoma, verdana, arial, sans;
-	font-size: 12px;
+	font-size: 11px;
 }
 
 .navbar {
@@ -91,6 +91,7 @@ body {
 }
 
 .form_item input,select,button,textarea {
+	font-size: 11px;
 	padding: 5px 6px;
 	width: 100%;
 	box-sizing:border-box;
@@ -129,6 +130,10 @@ body {
 	float: left;
 }
 
+.fl_r {
+	float: right;
+}
+
 .main_button {
 	background-color: #536b9e;
 	border: solid 1px #4f5f94;
@@ -140,6 +145,7 @@ body {
 	display: block;
 	text-align: center;
 	text-decoration: none;
+	font-size: 11px;
 }
 
 .def_button {
@@ -153,6 +159,7 @@ body {
 	display: block;
 	text-align: center;
 	text-decoration: none;
+	font-size: 11px;
 }
 
 .def_button:hover {
@@ -232,4 +239,12 @@ body {
 
 .order_content {
 	margin-bottom: 20px;
+}
+
+.order_footer {
+	overflow: hidden;
+}
+
+.order_price {
+	padding-top: 10px;
 }
