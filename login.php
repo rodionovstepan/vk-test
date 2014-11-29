@@ -1,8 +1,14 @@
 <?php
+	require_once('backend/context.php');
+	
+	header('Content-Type: application/json;');
+
+	if (isset($context_user_id) && isset($context_user_role)) {
+		echo json_encode(array('success' => true, 'url' => '/'));
+		exit();
+	}
 
 	if (isset($_POST['email']) && isset($_POST['pwd'])) {
-		header('Content-Type: application/json;');
-
 		$email = trim(mysql_real_escape_string($_POST['email']));
 		$pwd = $_POST['pwd'];
 
@@ -26,6 +32,12 @@
 			echo json_encode(array('success' => false, 'code' => 3));
 			exit();
 		}
+
+		session_start();
+		$_SESSION['uid'] = $user['id'];
+		$_SESSION['urole'] = $user['role'];
+
+		setcookie('sid', session_id(), time()+30*24*3600, '/', '', true, true);
 
 		echo json_encode(array('success' => true, 'url' => '/'));
 		exit();

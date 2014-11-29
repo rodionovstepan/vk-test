@@ -20,9 +20,7 @@
 		</div>
 		<div class="page_container" id="content">
 			<div class="page_welcome">
-				<div class="page_welcome_title">
-					Добро пожаловать!
-				</div>
+				<div class="page_welcome_title">Добро пожаловать!</div>
 				<div class="page_welcome_desc">
 					AOS &mdash; это система выполнения абстрактных заказов, где "исполнители" выполняют заказы "заказчиков".
 				</div>
