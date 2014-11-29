@@ -96,6 +96,20 @@ body {
 	border-radius: 2px;
 }
 
+.def_button {
+	background-color: #50545c;
+	border: solid 1px #444;
+	color: #fff;
+	cursor: pointer;
+	padding: 7px;
+	outline: none;
+	border-radius: 2px;
+}
+
+.def_button:hover {
+	background-color: #656973;
+}
+
 .main_button:hover {
 	background-color: #6981b5;
 }
@@ -129,6 +143,10 @@ body {
 	margin-bottom: 10px;
 }
 
+.page_menu_item:not(:last-of-type) {
+	margin-bottom: 10px;
+}
+
 .page_content {
 	overflow: hidden;
 	position: relative;
@@ -142,6 +160,6 @@ body {
 	margin-bottom: 20px;
 }
 
-.balance_button {
+.menu_button {
 	width: 160px;
 }

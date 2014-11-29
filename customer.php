@@ -57,7 +57,12 @@
 						</div>
 					</div>
 					<div class="page_menu">
-						<button type="button" class="main_button balance_button">Пополнить баланс</button>
+						<div class="page_menu_item">
+							<button type="button" class="main_button menu_button">Создать заказ</button>
+						</div>
+						<div  class="page_menu_item">
+							<button type="button" class="def_button menu_button">Пополнить баланс</button>
+						</div>
 					</div>
 				</div>
 				<div class="page_content">
