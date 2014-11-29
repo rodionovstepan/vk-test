@@ -88,7 +88,7 @@
 					<div class="page_content_title">
 						<?php
 							if (!$add_order) {
-								echo '<b>Список твоих активных заказов</b>';
+								echo '<b>Список активных заказов</b>';
 							} else {
 								echo '<b>Добавление нового заказа</b>';
 							}
