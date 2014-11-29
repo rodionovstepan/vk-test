@@ -49,13 +49,26 @@ aos.register = function() {
 		}
 
 		switch (data.code) {
-			case 1: aos.showFormValidation(aos.lang.all_fields_are_required);
-			case 2: aos.showFormValidation(aos.lang.invalid_username);
-			case 3: aos.showFormValidation(aos.lang.invalid_email);
-			case 4: aos.showFormValidation(aos.lang.invalid_pwds);
-			case 5: aos.showFormValidation(aos.lang.invalid_role);
-			case 6: aos.showFormValidation(aos.lang.user_already_registered);
-			default: aos.showFormValidation(aos.lang.something_goes_wrong);
+			case 1: 
+				aos.showFormValidation(aos.lang.all_fields_are_required);
+				break;
+			case 2: 
+				aos.showFormValidation(aos.lang.invalid_username);
+				break;
+			case 3: 
+				aos.showFormValidation(aos.lang.invalid_email);
+				break;
+			case 4: 
+				aos.showFormValidation(aos.lang.invalid_pwds);
+				break;
+			case 5: 
+				aos.showFormValidation(aos.lang.invalid_role);
+				break;
+			case 6: 
+				aos.showFormValidation(aos.lang.user_already_registered);
+				break;
+			default: 
+				aos.showFormValidation(aos.lang.something_goes_wrong);
 		}
 	});
 };
@@ -84,7 +97,19 @@ aos.login = function() {
 		pwd: pwd
 	}, function(data) {
 		if (data.success) {
-			location.reload();
+			window.location = data.url;
+		}
+
+		switch (data.code) {
+			case 1: 
+				aos.showFormValidation(aos.lang.invalid_email);
+				break;
+			case 2:
+				aos.showFormValidation(aos.lang.small_pwds);
+				break;
+			case 3:
+				aos.showFormValidation(aos.lang.user_not_registered);
+				break;
 		}
 	});
 };

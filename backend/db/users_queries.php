@@ -23,4 +23,24 @@
 
 		return mysql_insert_id();
 	}
+
+	function user_by_email_pwd($email, $pwd) {
+		$pwdhash = md5(md5($pwd));
+
+		$result = mysql_query(
+			"SELECT username, role FROM users
+			 WHERE email = '" . $email . "'
+			 AND   password_hash = '" . $pwdhash . "';");
+
+		if (!$result) {
+			die(mysql_error());
+		}
+
+		$count = mysql_num_rows($result);
+		if ($count == 0) {
+			return NULL;
+		}
+
+		return mysql_fetch_assoc($result[0]);
+	}
 ?>

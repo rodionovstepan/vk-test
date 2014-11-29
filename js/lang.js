@@ -11,3 +11,4 @@ aos.lang.invalid_pwds = 'Длина паролей должна быть не м
 aos.lang.invalid_role = 'Указана некорректная роль, выберите роль из предложенного списка';
 aos.lang.invalid_username = 'Имя пользователя не может быть пустым или более 30 символов';
 aos.lang.something_goes_wrong = 'Упс, что-то пошло не так.. Попробуй снова';
+aos.lang.user_not_registered = 'Такой пользователь не зарегистрирован на AOS';
