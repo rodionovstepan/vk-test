@@ -189,7 +189,7 @@ body {
 
 .page_menu {
 	padding: 10px;
-	background-color: #E5E5E5;
+	background-color: #eaeaea;
 	border: solid 1px #ccc;
 	border-radius: 3px;
 	margin-bottom: 20px;
@@ -208,7 +208,7 @@ body {
 .page_content {
 	overflow: hidden;
 	position: relative;
-	background-color: #ddd;
+	background-color: #eaeaea;
 	border: solid 1px #ccc;
 	padding: 10px;
 	border-radius: 3px;
@@ -221,7 +221,7 @@ body {
 }
 
 .order {
-	background-color: #efefef;
+	background-color: #f7f7f7;
 	border-radius: 3px;
 	padding: 10px;
 }
@@ -231,7 +231,7 @@ body {
 }
 
 .order:hover {
-	background-color: #fafafa;
+	background-color: #fefefe;
 }
 
 .order_title {
