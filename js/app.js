@@ -227,7 +227,7 @@ aos.orderFadeOut = function($order) {
 	})
 };
 
-aos.cancelOrder = function(el, id) {
+aos.cancelOrder = function(id) {
 	$.post('orders.php', {
 		act: 'cancel_order',
 		oid: id
@@ -263,7 +263,7 @@ aos.incBalance = function(el) {
 	});
 };
 
-aos.takeOrder = function(el, id) {
+aos.takeOrder = function(id) {
 	$.post('orders.php', {
 		act: 'take_order',
 		oid: id

@@ -10,9 +10,9 @@
 
 		$btn = "";
 		if ($context_user_id == $customer_id) {
-			$btn = "<button type=\"button\" class=\"def_button\" onclick=\"aos.cancelOrder(this, $id);\">Удалить заказ</button>";
+			$btn = "<button type=\"button\" class=\"def_button\" onclick=\"aos.cancelOrder($id);\">Удалить заказ</button>";
 		} else if (!$is_customer) {
-			$btn = "<button type=\"button\" class=\"main_button\" onclick=\"aos.takeOrder(this, $id);\">Выполнить заказ</button>";
+			$btn = "<button type=\"button\" class=\"main_button\" onclick=\"aos.takeOrder($id);\">Выполнить заказ</button>";
 		}
 
 		echo "
