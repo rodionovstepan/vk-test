@@ -99,8 +99,10 @@
 							if ($add_order) {
 								require 'html/new_order_form.html';
 							} else {
+								require_once 'backend/render.php';
+
 								foreach ($orders as $order) {
-									echo $order['title'] . '<br/>';
+									render_order($order, true);
 								}
 							}
 						?>

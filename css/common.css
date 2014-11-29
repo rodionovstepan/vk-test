@@ -212,3 +212,24 @@ body {
 	border-bottom: solid 1px #bbb;
 	padding-bottom: 5px;
 }
+
+.order {
+	background-color: #efefef;
+	border-radius: 3px;
+	margin-bottom: 20px;
+	padding: 10px;
+}
+
+.order:hover {
+	background-color: #fafafa;
+}
+
+.order_title {
+	margin-bottom: 10px;
+	padding-bottom: 5px;
+	border-bottom: solid 1px #ccc;
+}
+
+.order_content {
+	margin-bottom: 20px;
+}
