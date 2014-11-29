@@ -50,9 +50,11 @@ aos.register = function() {
 
 		switch (data.code) {
 			case 1: aos.showFormValidation(aos.lang.all_fields_are_required);
-			case 2: aos.showFormValidation(aos.lang.invalid_pwds);
-			case 3: aos.showFormValidation(aos.lang.invalid_role);
-			case 4: aos.showFormValidation(aos.lang.user_already_registered);
+			case 2: aos.showFormValidation(aos.lang.invalid_username);
+			case 3: aos.showFormValidation(aos.lang.invalid_email);
+			case 4: aos.showFormValidation(aos.lang.invalid_pwds);
+			case 5: aos.showFormValidation(aos.lang.invalid_role);
+			case 6: aos.showFormValidation(aos.lang.user_already_registered);
 			default: aos.showFormValidation(aos.lang.something_goes_wrong);
 		}
 	});

@@ -13,17 +13,22 @@
 	$repwd = $_POST['repwd'];
 	$role = intval($_POST['role']);
 
-	if (strlen($username) == 0) {
+	$usernamelen = strlen($username);
+	if ($usernamelen == 0 || $usernamelen > 30) {
 		echo json_encode(array('success' => false, 'code' => 2))
 	}
 
-	if (strlen($pwd) < 5 || $pwd != $repwd) {
+	if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 		echo json_encode(array('success' => false, 'code' => 3));
+	}
+
+	if (strlen($pwd) < 5 || $pwd != $repwd) {
+		echo json_encode(array('success' => false, 'code' => 4));
 		exit();
 	}
 
 	if ($role > 2 || $role < 1) {
-		echo json_encode(array('success' => false, 'code' => 4));
+		echo json_encode(array('success' => false, 'code' => 5));
 		exit();
 	}
 
@@ -33,7 +38,7 @@
 	db_connect();
 
 	if (is_user_registered($email)) {
-		echo json_encode(array('success' => false, 'code' => 5));
+		echo json_encode(array('success' => false, 'code' => 6));
 		exit();
 	}
 
