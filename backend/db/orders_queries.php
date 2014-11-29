@@ -19,6 +19,25 @@
 		return $rows;
 	}
 
+	function get_contractor_active_orders() {
+		$result = mysql_query(
+			"SELECT id, title, content, price, customer_id, customer_name
+			 FROM orders
+			 WHERE is_completed = FALSE AND is_deleted = FALSE 
+			 ORDER BY id DESC;");
+
+		if (!$result) {
+			die(mysql_error());
+		}
+
+		$rows = array();
+		while($row = mysql_fetch_assoc($result)) {
+			$rows[] = $row;
+		}
+
+		return $rows;
+	}
+
 	function add_order($customer_id, $customer_name, $title, $content, $price) {
 		mysql_query("START TRANSACTION");
 
