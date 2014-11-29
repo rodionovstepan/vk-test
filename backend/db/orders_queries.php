@@ -20,15 +20,26 @@
 	}
 
 	function add_order($customer_id, $customer_name, $title, $content, $price) {
-		$result = mysql_query(
+		mysql_query("START TRANSACTION");
+
+		$update = mysql_query(
+			"UPDATE users SET order_count = order_count+1 WHERE id = " . $customer_id . ";"
+		);
+
+		$insert = mysql_query(
 			"INSERT INTO orders (title, content, price, customer_id, customer_name, is_completed)
-			 VALUES ('" . $title . "', '" . $content . "', " . $price . ", " . $customer_id . ", '" . $customer_name . "', FALSE);");
+			 VALUES ('" . $title . "', '" . $content . "', " . $price . ", " . $customer_id . ", '" . $customer_name . "', FALSE);"
+		);
 
-		if (!$result) {
-			die(mysql_error());
-		}
+		$id = mysql_insert_id();
 
-		return mysql_insert_id();
+		if (!$update || !$insert) {
+			mysql_query("ROLLBACK");
+			return 0;
+		} 
+
+		mysql_query("COMMIT");
+		return $id;
 	}
 
 ?>
