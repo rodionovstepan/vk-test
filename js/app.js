@@ -146,9 +146,24 @@ aos.addOrder = function() {
 		return false;
 	}
 
-	if (!aos.isValidOrderPrice(price)) {
+	var pp = parseFloat(price);
+	if (!aos.isValidOrderPrice(price) || isNaN(pp)) {
 		aos.showFormValidation(aos.lang.invalid_order_price);
 		return false;
+	} else if (pp == 0) {
+		aos.showFormValidation(aos.lang.negative_order_price);
+		return false;
 	}
+
+	$.post('orders.php', {
+		act: 'add_order',
+		title: title,
+		content: content,
+		price: pp
+	}, function(data) {
+		if (data.success) {
+			window.location = 'customer.php';
+		}
+	});
 
 };
