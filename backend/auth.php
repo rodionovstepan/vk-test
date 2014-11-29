@@ -1,9 +1,9 @@
 <?php
 
-	require_once('backend/context.php');
+	require_once('context.php');
 
 	function login_user($user) {
-		if (isset($context_user_id) && isset($context_user_role)) {
+		if (isset($context_user_id, $context_user_role)) {
 			return;
 		}
 
@@ -12,10 +12,6 @@
 	}
 
 	function logout_user() {
-		if (!isset($context_user_id) || !isset($context_user_role)) {
-			return;
-		}
-
 		unset($context_user_id);
 		unset($context_user_role);
 		unset($_SESSION['uid']);
