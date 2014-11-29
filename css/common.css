@@ -137,3 +137,11 @@ body {
 	padding: 10px;
 	border-radius: 3px;
 }
+
+.page_content_title {
+	margin-bottom: 20px;
+}
+
+.balance_button {
+	width: 160px;
+}

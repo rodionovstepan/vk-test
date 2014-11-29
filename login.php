@@ -33,7 +33,7 @@
 
 		db_connect();
 
-		$user = user_by_email_pwd($email, $pwd);
+		$user = get_user_by_email_pwd($email, $pwd);
 		if ($user == NULL) {
 			echo json_encode(array('success' => false, 'code' => 3));
 			exit();

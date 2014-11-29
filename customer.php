@@ -1,11 +1,24 @@
 <?php
 	
 	require_once('backend/context.php');
-
+	
 	if (!isset($context_user_id)) {
 		header('Location: /');
 		exit();
 	} 
+
+	require_once('backend/db/connect.php');
+	require_once('backend/db/users_queries.php');
+
+	db_connect();
+
+	$user_info = get_user_info($context_user_id);
+	if ($user_info == NULL) {
+		header('Location: error.php');
+		exit();
+	}
+
+
 
 ?>
 <!doctype html>
@@ -38,21 +51,18 @@
 							<b><?php echo $context_user_name ?></b>
 						</div>
 						<div>
-							Баланс: 4000<br/>
-							Опубликовано заказов: 2
+							Баланс: <?php echo $user_info['balance'] ?><br/><br/>
+							Опубликовано заказов: <?php echo $user_info['order_count'] ?>
 						</div>
 					</div>
 					<div class="page_menu">
-						<div class="page_menu_title">
-							<b>Пополнение баланса</b>
-						</div>
-						<div>
-							
-						</div>
+						<button type="button" class="main_button balance_button">Пополнить баланс</button>
 					</div>
 				</div>
 				<div class="page_content">
-					Content
+					<div class="page_content_title">
+						<b>Список твоих активных заказов</b>
+					</div>
 				</div>
 			</div>
 		</div>

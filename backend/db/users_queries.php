@@ -24,7 +24,7 @@
 		return mysql_insert_id();
 	}
 
-	function user_by_email_pwd($email, $pwd) {
+	function get_user_by_email_pwd($email, $pwd) {
 		$pwdhash = md5(md5($pwd));
 
 		$result = mysql_query(
@@ -36,8 +36,24 @@
 			die(mysql_error());
 		}
 
-		$count = mysql_num_rows($result);
-		if ($count == 0) {
+		if (mysql_num_rows($result) == 0) {
+			return NULL;
+		}
+
+		return mysql_fetch_assoc($result);
+	}
+
+	function get_user_info($id) {
+		$result = mysql_query(
+			"SELECT balance, order_count
+			 FROM users 
+			 WHERE id = '" . $id . "';");
+
+		if (!$result) {
+			die(mysql_error());
+		}
+
+		if (mysql_num_rows($result) == 0) {
 			return NULL;
 		}
 
