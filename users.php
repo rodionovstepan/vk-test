@@ -19,7 +19,7 @@
 		if (!_register_all_fields()) {
 			echo json_encode(array('success' => false, 'code' => 1));
 		} else {
-			$username = trim(mysql_real_escape_string($_POST['username']));
+			$username = trim(mysql_real_escape_string(htmlspecialchars($_POST['username']));
 			$email = trim(mysql_real_escape_string($_POST['email']));
 			$pwd = $_POST['pwd'];
 			$repwd = $_POST['repwd'];
