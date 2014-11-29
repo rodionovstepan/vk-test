@@ -13,13 +13,13 @@
 
 	db_connect();
 
-	$user_info = get_user_info($context_user_id);
+	$user_info = get_user_info_query($context_user_id);
 	if ($user_info == NULL) {
 		header('Location: error.php');
 		exit();
 	}
 
-	$orders = get_contractor_active_orders();
+	$orders = get_contractor_active_orders_query();
 	$order_count = $user_info['order_count'];
 	$balance = $user_info['balance'];
 ?>

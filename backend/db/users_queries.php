@@ -1,6 +1,6 @@
 <?php
 	
-	function is_user_registered($email) {
+	function is_user_registered_query($email) {
 		$result = mysql_query("SELECT count(id) FROM users WHERE email = '" . $email . "';");
 		
 		if (!$result) {
@@ -10,7 +10,7 @@
 		return mysql_result($result, 0) > 0;
 	}
 
-	function register_user($username, $email, $pwd, $role) {
+	function register_user_query($username, $email, $pwd, $role) {
 		$pwdhash = md5(md5($pwd));
 
 		$result = mysql_query(
@@ -24,7 +24,7 @@
 		return mysql_insert_id();
 	}
 
-	function get_user_by_email_pwd($email, $pwd) {
+	function get_user_by_email_pwd_query($email, $pwd) {
 		$pwdhash = md5(md5($pwd));
 
 		$result = mysql_query(
@@ -43,7 +43,7 @@
 		return mysql_fetch_assoc($result);
 	}
 
-	function get_user_info($id) {
+	function get_user_info_query($id) {
 		$result = mysql_query(
 			"SELECT balance, order_count, username
 			 FROM users 
@@ -60,7 +60,7 @@
 		return mysql_fetch_assoc($result);
 	}
 
-	function inc_balance($customer_id, $value) {
+	function inc_balance_query($customer_id, $value) {
 		$result = mysql_query(
 			"UPDATE users SET balance = balance+" . $value . " WHERE id = " . $customer_id . ";");
 

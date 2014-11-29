@@ -8,7 +8,7 @@
 	function inc_balance_handler() {
 		global $context_user_id;
 
-		$balance = inc_balance($context_user_id, BALANCE_INC_PART);
+		$balance = inc_balance_query($context_user_id, BALANCE_INC_PART);
 		
 		return array(
 			'success' => $balance > 0,

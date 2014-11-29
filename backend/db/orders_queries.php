@@ -1,6 +1,6 @@
 <?php
 
-	function get_customer_active_orders($customer_id) {
+	function get_customer_active_orders_query($customer_id) {
 		$result = mysql_query(
 			"SELECT id, title, content, price, customer_id, customer_name
 			 FROM orders
@@ -19,7 +19,7 @@
 		return $rows;
 	}
 
-	function get_contractor_active_orders() {
+	function get_contractor_active_orders_query() {
 		$result = mysql_query(
 			"SELECT id, title, content, price, customer_id, customer_name
 			 FROM orders
@@ -38,7 +38,7 @@
 		return $rows;
 	}
 
-	function add_order($customer_id, $customer_name, $title, $content, $price) {
+	function add_order_query($customer_id, $customer_name, $title, $content, $price) {
 		mysql_query("START TRANSACTION");
 
 		$update = mysql_query(
@@ -61,7 +61,7 @@
 		return $id;
 	}
 
-	function cancel_order($customer_id, $order_id) {
+	function cancel_order_query($customer_id, $order_id) {
 		mysql_query("START TRANSACTION");
 
 		$dec = mysql_query(
@@ -84,7 +84,7 @@
 		return 1;
 	}
 
-	function take_order($contractor_id, $order_id) {
+	function take_order_query($contractor_id, $order_id) {
 		mysql_query("START TRANSACTION");
 
 		$price = _get_order_price($order_id);

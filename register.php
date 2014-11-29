@@ -47,12 +47,12 @@
 
 	db_connect();
 
-	if (is_user_registered($email)) {
+	if (is_user_registered_query($email)) {
 		echo json_encode(array('success' => false, 'code' => 6));
 		exit();
 	}
 
-	$id = register_user($username, $email, $pwd, $role);
+	$id = register_user_query($username, $email, $pwd, $role);
 
 	login_user(array('id' => $id, 'role' => $role));
 

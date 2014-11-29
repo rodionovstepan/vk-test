@@ -14,7 +14,7 @@
 			return $validation;
 		}
 
-		if (add_order($context_user_id, $context_user_name, $title, $content, $price)) {
+		if (add_order_query($context_user_id, $context_user_name, $title, $content, $price)) {
 			return array('success' => true);
 		} else {
 			return array('success' => false, 'code' => 4);
@@ -24,10 +24,10 @@
 	function cancel_order_handler($order_id) {
 		global $context_user_id;
 
-		$result = cancel_order($context_user_id, $order_id);
+		$result = cancel_order_query($context_user_id, $order_id);
 
 		if ($result) {
-			$user_info = get_user_info($context_user_id);
+			$user_info = get_user_info_query($context_user_id);
 
 			return array(
 				'success' => true,
@@ -41,10 +41,10 @@
 	function take_order_handler($order_id) {
 		global $context_user_id;
 
-		$result = take_order($context_user_id, $order_id);
+		$result = take_order_query($context_user_id, $order_id);
 
 		if ($result) {
-			$user_info = get_user_info($context_user_id);
+			$user_info = get_user_info_query($context_user_id);
 
 			return array(
 				'success' => true,
@@ -67,7 +67,7 @@
 			return array('success' => false, 'code' => 2);
 		}
 
-		$user_info = get_user_info($context_user_id);
+		$user_info = get_user_info_query($context_user_id);
 		if ($user_info['balance'] < $price) {
 			return array('success' => false, 'code' => 3);
 		}

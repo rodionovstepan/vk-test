@@ -24,14 +24,14 @@
 
 	db_connect();
 
-	$user_info = get_user_info($user_id);
+	$user_info = get_user_info_query($user_id);
 	if ($user_info == NULL) {
 		header('Location: error.php');
 		exit();
 	}
 
 	if (!$add_order) {
-		$orders = get_customer_active_orders($user_id);
+		$orders = get_customer_active_orders_query($user_id);
 	}
 
 	$order_count = $user_info['order_count'];
