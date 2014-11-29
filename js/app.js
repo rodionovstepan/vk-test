@@ -142,7 +142,7 @@ aos.login = function() {
 	});
 };
 
-aos.cancelOrder = function() {
+aos.goToCustomer = function() {
 	window.location = 'customer.php';
 };
 
