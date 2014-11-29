@@ -1,7 +1,6 @@
 <?php
 
 	require_once('backend/auth.php');
-	require_once('backend/def.php');
 
 	header('Content-Type: application/json;');
 

@@ -1,7 +1,12 @@
 <?php
-	header('Content-Type: application/json;');
+	require_once('backend/context.php');
 
-	require_once('backend/def.php');
+	if (!$is_ajax) {
+		header('Location: /');
+		exit();
+	}
+
+	header('Content-Type: application/json;');
 
 	if (!isset($_POST['username']) || !isset($_POST['email']) || 
 		!isset($_POST['pwd']) || !isset($_POST['repwd']) || !isset($_POST['role'])) {

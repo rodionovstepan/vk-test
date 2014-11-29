@@ -1,15 +1,13 @@
 <?php
 	
-	$is_ajax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && 
-				strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
-
+	require_once('backend/context.php');
+	
 	if (!$is_ajax) {
 		header('Location: /');
 		exit();
 	}
 
 	header('Content-Type: application/json;');
-	require_once('backend/context.php');
 
 	$act = $_POST['act'];
 

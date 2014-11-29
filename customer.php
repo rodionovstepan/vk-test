@@ -31,7 +31,9 @@
 		exit();
 	}
 
-	$orders = get_customer_active_orders($context_user_id);
+	if (!$add_order) {
+		$orders = get_customer_active_orders($context_user_id);
+	}
 
 ?>
 <!doctype html>
@@ -96,6 +98,10 @@
 						<?php
 							if ($add_order) {
 								require 'html/new_order_form.html';
+							} else {
+								foreach ($orders as $order) {
+									echo $order['title'] . '<br/>';
+								}
 							}
 						?>
 					</div>

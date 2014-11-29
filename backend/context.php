@@ -14,3 +14,6 @@
 		$context_user_role = intval($_SESSION['urole']);
 		$context_user_name = $_SESSION['uname'];
 	}
+
+	$is_ajax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && 
+				strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
