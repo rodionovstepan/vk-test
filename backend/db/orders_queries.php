@@ -4,7 +4,7 @@
 		$result = mysql_query(
 			"SELECT id, title, content, price
 			 FROM orders
-			 WHERE is_completed = FALSE AND customer_id = " . $customer_id . " 
+			 WHERE is_completed = FALSE AND is_deleted = FALSE AND customer_id = " . $customer_id . " 
 			 ORDER BY id DESC;");
 
 		if (!$result) {
@@ -27,8 +27,8 @@
 		);
 
 		$insert = mysql_query(
-			"INSERT INTO orders (title, content, price, customer_id, customer_name, is_completed)
-			 VALUES ('" . $title . "', '" . $content . "', " . $price . ", " . $customer_id . ", '" . $customer_name . "', FALSE);"
+			"INSERT INTO orders (title, content, price, customer_id, customer_name, is_completed, is_deleted)
+			 VALUES ('" . $title . "', '" . $content . "', " . $price . ", " . $customer_id . ", '" . $customer_name . "', FALSE, FALSE);"
 		);
 
 		$id = mysql_insert_id();
