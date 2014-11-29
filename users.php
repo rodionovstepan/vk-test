@@ -16,6 +16,7 @@
 			'success' => false,
 			'message' => 'Invalid request')
 		);
+		
 		exit();
 	}
 
