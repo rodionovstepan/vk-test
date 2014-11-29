@@ -93,7 +93,7 @@ aos.login = function() {
 	}
 
 	$.post('login.php', {
-		username: username,
+		email: email,
 		pwd: pwd
 	}, function(data) {
 		if (data.success) {

@@ -41,6 +41,6 @@
 			return NULL;
 		}
 
-		return mysql_fetch_assoc($result[0]);
+		return mysql_fetch_assoc($result);
 	}
 ?>

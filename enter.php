@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 	<head>
-		<title>Abstract Order System | VK Test</title>
+		<title>Abstract Order System | Log In</title>
 		<meta charset="utf-8"> 
 		<link rel="stylesheet" href="css/common.css">
 	</head>
@@ -13,7 +13,7 @@
 						<a href="/">AOS | VK Test</a>
 					</div>
 					<div class="navbar_right">
-						Abstract Order System
+						Вход в Abstract Order System
 					</div>
 				</div>
 			</div>
@@ -21,20 +21,11 @@
 		<div class="page_container" id="content">
 			<div class="page_welcome">
 				<div class="page_welcome_title">
-					Добро пожаловать!
-				</div>
-				<div class="page_welcome_desc">
-					AOS &mdash; это система выполнения абстрактных заказов, где "исполнители" выполняют заказы "заказчиков".
+					Вход в AOS
 				</div>
 				<div class="page_welcome_content">
-					<div class="page_welcome_content_title">
-						<b>Присоединяйся</b>, пройдя очень простую процедуру регистрации:
-					</div>
 					<div class="page_welcome_form">
 						<div class="form_validation" style="display:none;"></div>
-						<div class="form_item">
-							<input type="text" id="username" name="username" placeholder="Имя пользователя">
-						</div>
 						<div class="form_item">
 							<input type="text" id="email" name="email" placeholder="Электронная почта">
 						</div>
@@ -42,19 +33,10 @@
 							<input type="password" id="pwd" name="pwd" placeholder="Пароль">
 						</div>
 						<div class="form_item">
-							<input type="password" id="repwd" name="repwd" placeholder="Пароль еще раз">
+							<button type="button" class="main_button" onclick="aos.login();">Войти</button>
 						</div>
 						<div class="form_item">
-							<select name="role" id="role">
-								<option value="1">Я - заказчик</option>
-								<option value="2">Я - исполнитель</option>
-							</select>
-						</div>
-						<div class="form_item">
-							<button type="button" class="main_button" onclick="aos.register();">Зарегистрироваться</button>
-						</div>
-						<div class="form_item">
-							<a href="enter.php">Войти</a>
+							<a href="/">На главную</a>
 						</div>
 					</div>
 				</div>
