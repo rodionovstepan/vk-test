@@ -79,11 +79,47 @@ body {
 	width: 220px;
 }
 
-.form_item input,select,button {
+.order_form_item {
+	width: 100%;
+}
+
+.form_item input,select,button,textarea {
 	padding: 5px 6px;
 	width: 100%;
-	-moz-box-sizing: content-box;
-	-webkit-box-sizing: content-box;
+	box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+	font-family: tahoma,verdana,arial,sans;
+}
+
+.order_price input {
+	width: 200px;
+}
+
+.order_price {
+	overflow: hidden;
+	position: relative;
+}
+
+.order_price_inf {
+	overflow: hidden;
+	position: relative;
+	padding: 7px 0 0 10px;
+}
+
+.order_form_submit {
+	margin-top: 20px;
+	overflow: hidden;
+}
+
+.order_form_submit button {
+	width: 120px;
+	margin-right: 10px;
+	float: left;
+}
+
+.fl_l {
+	float: left;
 }
 
 .main_button {
@@ -91,7 +127,7 @@ body {
 	border: solid 1px #4f5f94;
 	color: #fff;
 	cursor: pointer;
-	padding: 7px;
+	padding: 5px 15px;
 	outline: none;
 	border-radius: 2px;
 	display: block;
@@ -104,7 +140,7 @@ body {
 	border: solid 1px #444;
 	color: #fff;
 	cursor: pointer;
-	padding: 7px;
+	padding: 5px 15px;
 	outline: none;
 	border-radius: 2px;
 	display: block;
@@ -142,11 +178,13 @@ body {
 	background-color: #E5E5E5;
 	border: solid 1px #ccc;
 	border-radius: 3px;
-	margin-bottom: 10px;
+	margin-bottom: 20px;
 }
 
 .page_menu_title {
 	margin-bottom: 10px;
+	padding-bottom: 5px;
+	border-bottom: solid 1px #bbb;
 }
 
 .page_menu_item:not(:last-of-type) {
@@ -164,8 +202,6 @@ body {
 
 .page_content_title {
 	margin-bottom: 20px;
-}
-
-.menu_button {
-	width: 160px;
+	border-bottom: solid 1px #bbb;
+	padding-bottom: 5px;
 }

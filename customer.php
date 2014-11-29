@@ -94,8 +94,8 @@
 					</div>
 					<div>
 						<?php
-							if (count($orders) == 0) {
-								echo 'На данный момент у тебя нет активных заказов';
+							if ($add_order) {
+								require 'html/new_order_form.html';
 							}
 						?>
 					</div>
