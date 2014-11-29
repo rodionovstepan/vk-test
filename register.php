@@ -7,10 +7,10 @@
 		exit();
 	}
 
-	$username = trim(mysql_escape_string($_POST['username']));
-	$email = trim(mysql_escape_string($_POST['email']));
-	$pwd = mysql_escape_string($_POST['pwd']);
-	$repwd = mysql_escape_string($_POST['repwd']);
+	$username = trim(mysql_real_escape_string($_POST['username']));
+	$email = trim(mysql_real_escape_string($_POST['email']));
+	$pwd = mysql_real_escape_string($_POST['pwd']);
+	$repwd = mysql_real_escape_string($_POST['repwd']);
 	$role = intval($_POST['role']);
 
 	if (strlen($pwd) < 5 || $pwd != $repwd) {

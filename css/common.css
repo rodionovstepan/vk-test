@@ -31,6 +31,11 @@ body {
 	text-align: right;
 }
 
+.navbar_container a {
+	text-decoration: none;
+	color: #fff;
+}
+
 .page_container {
 	padding: 0;
 	margin: 0 auto;
@@ -53,11 +58,11 @@ body {
 	margin-top: 20px;
 }
 
-.page_welcome_register {
+.page_welcome_content {
 	margin-top: 30px;
 }
 
-.page_welcome_register_form {
+.page_welcome_form {
 	margin-top: 15px;
 }
 
