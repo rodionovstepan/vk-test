@@ -2,7 +2,7 @@
 
 	require_once('backend/context.php');
 
-	function loginUser($user) {
+	function login_user($user) {
 		if (isset($context_user_id) && isset($context_user_role)) {
 			return;
 		}
@@ -11,7 +11,7 @@
 		$_SESSION['urole'] = $user['role'];
 	}
 
-	function logoutUser() {
+	function logout_user() {
 		if (!isset($context_user_id) || !isset($context_user_role)) {
 			return;
 		}

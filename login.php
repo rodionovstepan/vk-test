@@ -1,11 +1,22 @@
 <?php
 
 	require_once('backend/auth.php');
+	require_once('backend/def.php');
 
 	header('Content-Type: application/json;');
 
+	function url_by_role($role) {
+		return $role == CUSTOMER_ROLE
+			? 'customer.php'
+			: 'contractor.php';
+	}
+
 	if (isset($context_user_id) && isset($context_user_role)) {
-		echo json_encode(array('success' => true, 'url' => '/'));
+		echo json_encode(array(
+			'success' => true, 
+			'url' => url_by_role($context_user_role))
+		);
+
 		exit();
 	}
 
@@ -34,10 +45,12 @@
 			exit();
 		}
 
-		loginUser($user);
+		login_user($user);
 
-		echo json_encode(array('success' => true, 'url' => '/'));
-		exit();
+		echo json_encode(array(
+			'success' => true, 
+			'url' => url_by_role($user['role']))
+		);
 	}
 
 ?>

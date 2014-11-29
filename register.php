@@ -1,6 +1,8 @@
 <?php
 	header('Content-Type: application/json;');
 
+	require_once('backend/def.php');
+
 	if (!isset($_POST['username']) || !isset($_POST['email']) || 
 		!isset($_POST['pwd']) || !isset($_POST['repwd']) || !isset($_POST['role'])) {
 		echo json_encode(array('success' => false, 'code' => 1));
@@ -29,7 +31,7 @@
 		exit();
 	}
 
-	if ($role > 2 || $role < 1) {
+	if ($role != CUSTOMER_ROLE || $role != CONTRACTOR_ROLE) {
 		echo json_encode(array('success' => false, 'code' => 5));
 		exit();
 	}
@@ -47,7 +49,12 @@
 
 	$id = register_user($username, $email, $pwd, $role);
 
-	loginUser(array('id' => $id, 'role' => $role));
+	login_user(array('id' => $id, 'role' => $role));
 
-	echo json_encode(array('success' => true, 'id' => $id));
+	echo json_encode(array(
+		'success' => true, 
+		'url' => $role == CUSTOMER_ROLE 
+			? 'customer.php' 
+			: 'contractor.php')
+	);
 ?>

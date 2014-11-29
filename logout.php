@@ -2,8 +2,8 @@
 
 	require_once('backend/auth.php');
 
-	logoutUser();
-	
+	logout_user();
+
 	header('Location: /');
 
 ?>

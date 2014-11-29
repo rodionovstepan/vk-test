@@ -44,7 +44,7 @@ aos.register = function() {
 		role: role
 	}, function (data) {
 		if (data.success) {
-			location.reload();
+			window.location = data.url;
 			return;
 		}
 
