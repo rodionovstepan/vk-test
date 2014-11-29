@@ -16,7 +16,6 @@
 		}
 	}
 
-
 	$add_order = $_GET['act'] == 'add_order';
 
 	require_once('backend/db/connect.php');
@@ -34,7 +33,6 @@
 	if (!$add_order) {
 		$orders = get_customer_active_orders($user_id);
 	}
-
 ?>
 <!doctype html>
 <html>
@@ -99,7 +97,7 @@
 
 								if (count($orders)) {
 									foreach ($orders as $order) {
-										render_order($order, $user_id == $context_user_id);
+										render_order($order, $context_user_role == CUSTOMER_ROLE, $context_user_id);
 									}
 								} else {
 									echo 'Нет активных заказов';
