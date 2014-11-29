@@ -25,14 +25,14 @@
 
 	db_connect();
 
-	$user_info = get_user_info($context_user_id);
+	$user_info = get_user_info($user_id);
 	if ($user_info == NULL) {
 		header('Location: error.php');
 		exit();
 	}
 
 	if (!$add_order) {
-		$orders = get_customer_active_orders($context_user_id);
+		$orders = get_customer_active_orders($user_id);
 	}
 
 ?>
@@ -63,26 +63,22 @@
 				<div class="page_side">
 					<div class="page_menu">
 						<div class="page_menu_title">
-							<b><?php echo $context_user_name ?></b>
+							<b><?= $user_info['username'] ?></b>
 						</div>
 						<div>
 							Баланс: <?= $user_info['balance'] ?><br/><br/>
 							Всего заказов: <span id="customer_order_count"><?= $user_info['order_count'] ?></span><br/><br/>
 						</div>
 					</div>
-					<div class="page_menu">
-						<?php 
+					<?php
+						if ($context_user_id == $user_id) {
 							if (!$add_order) {
-								echo '
-								<div class="page_menu_item">
-									<a href="customer.php?act=add_order" class="main_button menu_button">Создать заказ</a>
-								</div>';
+								require 'html/context_customer_menu.html';
+							} else {
+								require 'html/add_order_customer_menu.html';
 							}
-						?>
-						<div  class="page_menu_item">
-							<button type="button" class="def_button menu_button">Пополнить баланс</button>
-						</div>
-					</div>
+						}
+					?>
 				</div>
 				<div class="page_content">
 					<div class="page_content_title">
@@ -103,7 +99,7 @@
 
 								if (count($orders)) {
 									foreach ($orders as $order) {
-										render_order($order, true);
+										render_order($order, $user_id == $context_user_id);
 									}
 								} else {
 									echo 'Нет активных заказов';
