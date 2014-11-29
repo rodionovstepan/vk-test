@@ -59,4 +59,15 @@
 
 		return mysql_fetch_assoc($result);
 	}
+
+	function inc_balance($customer_id, $value) {
+		$result = mysql_query(
+			"UPDATE users SET balance = balance+" . $value . " WHERE id = " . $customer_id . ";");
+
+		if (!$result) {
+			die(mysql_error());
+		}
+
+		return mysql_affected_rows() > 0;
+	}
 ?>
