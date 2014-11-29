@@ -34,10 +34,21 @@
 			<div class="page_content_wrapper">
 				<div class="page_side">
 					<div class="page_menu">
-						One menu
+						<div class="page_menu_title">
+							<b><?php echo $context_user_name ?></b>
+						</div>
+						<div>
+							Баланс: 4000<br/>
+							Опубликовано заказов: 2
+						</div>
 					</div>
 					<div class="page_menu">
-						Two menu
+						<div class="page_menu_title">
+							<b>Пополнение баланса</b>
+						</div>
+						<div>
+							
+						</div>
 					</div>
 				</div>
 				<div class="page_content">
