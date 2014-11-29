@@ -41,7 +41,7 @@
 					<div class="page_welcome_form">
 						<div class="form_validation js_validation" style="display:none;"></div>
 						<div class="form_item">
-							<input type="text" id="username" name="username" placeholder="Имя пользователя">
+							<input type="text" id="username" name="username" maxlength="30" placeholder="Имя пользователя">
 						</div>
 						<div class="form_item">
 							<input type="text" id="email" name="email" placeholder="Электронная почта">
