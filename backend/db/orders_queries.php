@@ -2,7 +2,7 @@
 
 	function get_customer_active_orders($customer_id) {
 		$result = mysql_query(
-			"SELECT id, title, content, price
+			"SELECT id, title, content, price, customer_id, customer_name
 			 FROM orders
 			 WHERE is_completed = FALSE AND is_deleted = FALSE AND customer_id = " . $customer_id . " 
 			 ORDER BY id DESC;");

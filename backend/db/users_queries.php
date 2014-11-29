@@ -45,7 +45,7 @@
 
 	function get_user_info($id) {
 		$result = mysql_query(
-			"SELECT balance, order_count
+			"SELECT balance, order_count, username
 			 FROM users 
 			 WHERE id = '" . $id . "';");
 
