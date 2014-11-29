@@ -47,7 +47,7 @@
 		$result = mysql_query(
 			"SELECT balance, order_count, username
 			 FROM users 
-			 WHERE id = '" . $id . "';");
+			 WHERE id = " . $id . ";");
 
 		if (!$result) {
 			die(mysql_error());
