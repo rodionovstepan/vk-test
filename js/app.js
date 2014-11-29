@@ -37,6 +37,17 @@ aos.increment = function(id) {
 	}
 };
 
+aos.showTempError = function(el, nowtext, latertext) {
+	if (el != undefined) {
+		var $el = $(el);
+
+		$el.text(nowtext);
+		setTimeout(function() {
+			$el.text(latertext);
+		}, 2000);
+	}
+};
+
 aos.register = function() {
 	var username = $('#username').val(),
 		email = $('#email').val(),
@@ -218,13 +229,24 @@ aos.cancelOrder = function(el, id) {
 					$('#page_content_wrapper').text(aos.lang.no_active_orders);
 				}
 			});
-		} else if (el != undefined) {
-			var $el = $(el);
+		} else {
+			aos.showTempError(el, 
+				aos.lang.cannot_cancel_order,
+				aos.lang.cancel_order);
+		}
+	});
+};
 
-			$el.text(aos.lang.cannot_cancel_order);
-			setTimeout(function() {
-				$el.text(aos.lang.cancel_order);
-			}, 2000);
+aos.incBalance = function(el) {
+	$.post('users.php', {
+		act: 'inc_balance'
+	}, function (data) {
+		if (data.success) {
+			$('#customer_balance').text(data.balance);
+		} else {
+			aos.showTempError(el,
+				aos.lang.cannot_inc_balance,
+				aos.lang.inc_balance);
 		}
 	});
 };

@@ -68,6 +68,16 @@
 			die(mysql_error());
 		}
 
-		return mysql_affected_rows() > 0;
+		if (mysql_affected_rows()) {
+			$result = mysql_query("SELECT balance FROM users WHERE id = " . $customer_id . ";");
+			if (!$result) {
+				die(mysql_error());
+			}
+
+			$row = mysql_fetch_array($result);
+			return $row[0];
+		}
+
+		return 0;
 	}
 ?>

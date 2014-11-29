@@ -20,3 +20,5 @@ aos.lang.negative_order_price = 'Стоимость заказа должна б
 aos.lang.cannot_cancel_order = 'Не удалось удалить заказ';
 aos.lang.cancel_order = 'Удалить заказ';
 aos.lang.no_active_orders = 'Нет активных заказов';
+aos.lang.inc_balance = 'Пополнить баланс';
+aos.lang.cannot_inc_balance = 'Произошла ошибка';

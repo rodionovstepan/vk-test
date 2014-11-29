@@ -22,10 +22,10 @@
 
 	require_once('backend/db/connect.php');
 	require_once('backend/db/orders_queries.php');
-	
+
 	db_connect();
 
-	if ($_POST['act'] == 'add_order') {
+	if ($act == 'add_order') {
 		$title = trim(mysql_real_escape_string(htmlspecialchars($_POST['title'])));
 		$content = trim(mysql_real_escape_string(htmlspecialchars($_POST['content'])));
 		$price = $_POST['price'];

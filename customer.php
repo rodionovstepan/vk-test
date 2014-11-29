@@ -66,7 +66,7 @@
 							<b><?= $user_info['username'] ?></b>
 						</div>
 						<div>
-							Баланс: <?= $user_info['balance'] ?><br/><br/>
+							Баланс: <span id="customer_balance"><?= $user_info['balance'] ?></span><br/><br/>
 							Всего заказов: <span id="customer_order_count"><?= $user_info['order_count'] ?></span><br/><br/>
 						</div>
 					</div>
