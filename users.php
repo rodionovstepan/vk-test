@@ -1,36 +1,12 @@
 <?php
 
-	require_once('backend/context.php');
-
-	if (!$is_ajax) {
-		header('Location: /');
-		exit();
-	}
-
-	header('Content-Type: application/json;');
-
-	$act = $_POST['act'];
-
-	if (empty($context_user_id) || empty($act) || $act != 'inc_balance') {
-		echo json_encode(array(
-			'success' => false,
-			'message' => 'Invalid request')
-		);
-		
-		exit();
-	}
-
-	require_once('backend/db/connect.php');
-	require_once('backend/db/users_queries.php');
-	
-	db_connect();
+	require_once('backend/ajax_handler.php');
+	require_once('backend/handlers/users_handler.php');
 
 	if ($act == 'inc_balance') {
-		$balance = inc_balance($context_user_id, BALANCE_INC_PART);
-		echo json_encode(array(
-			'success' => $balance > 0,
-			'balance' => $balance)
-		);
+		echo json_encode(inc_balance_handler());
+	} else {
+		invalid_request();
 	}
 
 ?>

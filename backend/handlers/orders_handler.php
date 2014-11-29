@@ -1,6 +1,5 @@
 <?php
 	
-	require_once('backend/context.php');
 	require_once('backend/db/connect.php');
 	require_once('backend/db/orders_queries.php');
 	require_once('backend/db/users_queries.php');

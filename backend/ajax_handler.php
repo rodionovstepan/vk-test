@@ -24,3 +24,4 @@
 		invalid_request();
 	}
 
+?>
