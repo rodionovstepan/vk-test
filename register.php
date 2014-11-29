@@ -36,7 +36,7 @@
 		exit();
 	}
 
-	if ($role != CUSTOMER_ROLE || $role != CONTRACTOR_ROLE) {
+	if ($role != CUSTOMER_ROLE && $role != CONTRACTOR_ROLE) {
 		echo json_encode(array('success' => false, 'code' => 5));
 		exit();
 	}
