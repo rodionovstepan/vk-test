@@ -11,7 +11,7 @@
 
 	$act = $_POST['act'];
 
-	if (empty($context_user_id) || empty($act) || ($act != 'add_order' && $act != 'cancel_order')) {
+	if (empty($context_user_id) || empty($act) || ($act != 'add_order' && $act != 'cancel_order' && $act != 'take_order')) {
 		echo json_encode(array(
 			'success' => false,
 			'message' => 'Invalid request')
@@ -58,12 +58,33 @@
 		$id = intval($_POST['oid']);
 
 		$result = cancel_order($context_user_id, $id);
-		$user_info = get_user_info($context_user_id);
 
-		echo json_encode(array(
-			'success' => $result,
-			'balance' => $user_info['balance'])
-		);
+		if ($result) {
+			$user_info = get_user_info($context_user_id);
+
+			echo json_encode(array(
+				'success' => true,
+				'balance' => $user_info['balance'])
+			);
+		} else {
+			echo json_encode(array('success' => false));
+		}
+	} else if ($_POST['act'] == 'take_order') {
+		$id = intval($_POST['oid']);
+
+		$result = take_order($context_user_id, $id);
+
+		if ($result) {
+			$user_info = get_user_info($context_user_id);
+
+			echo json_encode(array(
+				'success' => true,
+				'balance' => $user_info['balance'],
+				'ordercount' => $user_info['order_count'])
+			);
+		} else {
+			echo json_encode(array('success' => false));
+		}
 	}
 
 ?>

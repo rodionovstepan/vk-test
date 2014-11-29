@@ -218,10 +218,6 @@ aos.addOrder = function() {
 };
 
 aos.cancelOrder = function(el, id) {
-	id = parseInt(id);
-	if (id <= 0)
-		return;
-
 	$.post('orders.php', {
 		act: 'cancel_order',
 		oid: id
@@ -255,6 +251,28 @@ aos.incBalance = function(el) {
 			aos.showTempError(el,
 				aos.lang.cannot_inc_balance,
 				aos.lang.inc_balance);
+		}
+	});
+};
+
+aos.takeOrder = function(el, id) {
+	$.post('orders.php', {
+		act: 'take_order',
+		oid: id
+	}, function (data) {
+		if (data.success) {
+			aos.increment('contractor_balance', data.balance);
+			aos.increment('contractor_order_count', data.ordercount);
+
+			$('#order' + id).fadeOut(function() {
+				$(this).remove();
+
+				if ($('.order').length === 0) {
+					$('#page_content_wrapper').text(aos.lang.no_active_orders);
+				}
+			});
+		} else {
+			alert('Nenene');
 		}
 	});
 };
