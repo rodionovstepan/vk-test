@@ -71,12 +71,15 @@
 									render_order($order, false, $context_user_id);
 								}
 							} else {
-								echo 'Нет доступных заказов';
+								echo 'Нет активных заказов';
 							}
 						?>
 					</div>
 				</div>
 			</div>
+		</div>
+		<div class="page_footer">
+			&copy; 2014
 		</div>
 		<script type="text/javascript" src="js/jquery.min.js"></script>
 		<script type="text/javascript" src="js/lang.js"></script>

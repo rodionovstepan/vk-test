@@ -115,6 +115,9 @@
 				</div>
 			</div>
 		</div>
+		<div class="page_footer">
+			&copy; 2014
+		</div>
 		<script type="text/javascript" src="js/jquery.min.js"></script>
 		<script type="text/javascript" src="js/lang.js"></script>
 		<script type="text/javascript" src="js/app.js"></script>
