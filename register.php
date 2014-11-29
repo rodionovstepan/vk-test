@@ -15,11 +15,13 @@
 
 	$usernamelen = strlen($username);
 	if ($usernamelen == 0 || $usernamelen > 30) {
-		echo json_encode(array('success' => false, 'code' => 2))
+		echo json_encode(array('success' => false, 'code' => 2));
+		exit();
 	}
 
 	if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 		echo json_encode(array('success' => false, 'code' => 3));
+		exit();
 	}
 
 	if (strlen($pwd) < 5 || $pwd != $repwd) {
