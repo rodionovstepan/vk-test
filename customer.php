@@ -33,6 +33,9 @@
 	if (!$add_order) {
 		$orders = get_customer_active_orders($user_id);
 	}
+
+	$order_count = $user_info['order_count'];
+	$balance = $user_info['balance'];
 ?>
 <!doctype html>
 <html>
@@ -64,8 +67,12 @@
 							<b><?= $user_info['username'] ?></b>
 						</div>
 						<div>
-							Баланс: <span id="customer_balance"><?= $user_info['balance'] ?></span><br/><br/>
-							Всего заказов: <span id="customer_order_count"><?= $user_info['order_count'] ?></span><br/><br/>
+							<?php 
+								if ($context_user_id == $user_id) {
+									echo "<span id=\"customer_balance\">$balance</span><br/><br/>";
+								}
+							?>
+							Всего заказов: <span id="customer_order_count"><?= $order_count ?></span>
 						</div>
 					</div>
 					<?php

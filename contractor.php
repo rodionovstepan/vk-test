@@ -20,6 +20,8 @@
 	}
 
 	$orders = get_contractor_active_orders();
+	$order_count = $user_info['order_count'];
+	$balance = $user_info['balance'];
 ?>
 <!doctype html>
 <html>
@@ -51,7 +53,8 @@
 							<b><?= $user_info['username'] ?></b>
 						</div>
 						<div>
-							Выполнено заказов: <span id="customer_order_count"><?= $user_info['order_count'] ?></span><br/><br/>
+							Баланс: <span id="contractor_balance"><?= $balance ?></span><br/><br/>
+							Выполнено заказов: <span id="contractor_order_count"><?= $order_count ?></span>
 						</div>
 					</div>
 				</div>
