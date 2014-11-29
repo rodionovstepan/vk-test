@@ -42,7 +42,7 @@
 		mysql_query("START TRANSACTION");
 
 		$update = mysql_query(
-			"UPDATE users SET order_count = order_count+1, balance = balance-" . $price . " WHERE id = " . $customer_id . ";"
+			"UPDATE users SET order_count = order_count+1, balance = balance-" . number_format($price, 2, '.', '') . " WHERE id = " . $customer_id . ";"
 		);
 
 		$insert = mysql_query(
@@ -93,7 +93,7 @@
 			return 0;
 		}
 
-		$aos_portion = round($price * SYSTEM_PERCENT/100.0, 2);
+		$aos_portion = $price * SYSTEM_PERCENT/100.0;
 		$user_portion = $price - $aos_portion;
 
 		$inc = mysql_query("UPDATE users 

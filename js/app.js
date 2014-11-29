@@ -13,7 +13,7 @@ aos.isValidOrderPrice = function(price) {
 	if (typeof price !== 'string')
 		return false;
 
-	var re = /^\d{1,15}([\,\.]\d{1,2})?$/;
+	var re = /^\d{1,14}([\,\.]\d{1,2})?$/;
 	return re.test(price);
 };
 
@@ -199,7 +199,7 @@ aos.addOrder = function() {
 		act: 'add_order',
 		title: title,
 		content: content,
-		price: pp
+		price: price
 	}, function(data) {
 		if (data.success) {
 			window.location = 'customer.php';

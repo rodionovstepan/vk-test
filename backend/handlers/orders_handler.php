@@ -63,12 +63,12 @@
 			return array('success' => false, 'code' => 1);
 		}
 
-		if (!preg_match('/^\d{1,15}([\,\.]\d{1,2})?$/', $price)) {
+		if (!preg_match('/^\d{1,14}([\,\.]\d{1,2})?$/', $price)) {
 			return array('success' => false, 'code' => 2);
 		}
 
 		$user_info = get_user_info_query($context_user_id);
-		if ($user_info['balance'] < $price) {
+		if (bccomp(number_format($user_info['balance'], 2, '.', ''), $price, 2) < 0) {
 			return array('success' => false, 'code' => 3);
 		}
 
