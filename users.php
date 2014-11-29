@@ -16,6 +16,7 @@
 			'success' => false,
 			'message' => 'Invalid request')
 		);
+		exit();
 	}
 
 	require_once('backend/db/connect.php');
@@ -24,7 +25,7 @@
 	db_connect();
 
 	if ($act == 'inc_balance') {
-		$balance = inc_balance($context_user_id, 5000);
+		$balance = inc_balance($context_user_id, BALANCE_INC_PART);
 		echo json_encode(array(
 			'success' => $balance > 0,
 			'balance' => $balance)
