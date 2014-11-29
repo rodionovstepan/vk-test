@@ -1,6 +1,7 @@
 <?php
-	require_once('backend/context.php');
-	
+
+	require_once('backend/auth.php');
+
 	header('Content-Type: application/json;');
 
 	if (isset($context_user_id) && isset($context_user_role)) {
@@ -33,11 +34,7 @@
 			exit();
 		}
 
-		session_start();
-		$_SESSION['uid'] = $user['id'];
-		$_SESSION['urole'] = $user['role'];
-
-		setcookie('sid', session_id(), time()+30*24*3600, '/', '', true, true);
+		loginUser($user);
 
 		echo json_encode(array('success' => true, 'url' => '/'));
 		exit();

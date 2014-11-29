@@ -36,6 +36,7 @@
 
 	require_once('backend/db/connect.php');	
 	require_once('backend/db/users_queries.php');
+	require_once('backend/auth.php');
 
 	db_connect();
 
@@ -45,6 +46,8 @@
 	}
 
 	$id = register_user($username, $email, $pwd, $role);
+
+	loginUser(array('id' => $id, 'role' => $role));
 
 	echo json_encode(array('success' => true, 'id' => $id));
 ?>
