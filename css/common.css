@@ -105,3 +105,27 @@ body {
 	font-size: 11px;
 	text-align: center;
 }
+
+.page_content_wrapper {
+	overflow: hidden;
+	position: relative;
+}
+
+.page_side {
+	float: left;
+	width: 200px;
+	margin-right: 20px;
+}
+
+.page_menu {
+	padding: 10px;
+	background-color: #ccc;
+	margin-bottom: 10px;
+}
+
+.page_content {
+	overflow: hidden;
+	position: relative;
+	background-color: #ddd;
+	padding: 10px;
+}
