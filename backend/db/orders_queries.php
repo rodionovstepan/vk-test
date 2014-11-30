@@ -1,11 +1,13 @@
 <?php
 
 	function get_customer_active_orders_query($customer_id) {
+		global $orders_db_link;
+
 		$result = mysql_query(
 			"SELECT id, title, content, price, customer_id, customer_name
 			 FROM orders
 			 WHERE is_completed = FALSE AND is_deleted = FALSE AND customer_id = $customer_id 
-			 ORDER BY id DESC;");
+			 ORDER BY id DESC;", $orders_db_link);
 
 		if (!$result) {
 			return array();
@@ -20,11 +22,13 @@
 	}
 
 	function get_contractor_active_orders_query() {
+		global $orders_db_link;
+
 		$result = mysql_query(
 			"SELECT id, title, content, price, customer_id, customer_name
 			 FROM orders
 			 WHERE is_completed = FALSE AND is_deleted = FALSE 
-			 ORDER BY id DESC;");
+			 ORDER BY id DESC;", $orders_db_link);
 
 		if (!$result) {
 			return array();
@@ -39,40 +43,49 @@
 	}
 
 	function add_order_query($customer_id, $customer_name, $title, $content, $price) {
-		mysql_query("START TRANSACTION");
+		global $orders_db_link, $users_db_link;
+
+		start_transaction();
 
 		$update = mysql_query(
 			"UPDATE users 
 			 SET order_count = order_count+1, 
 			 	 balance = balance-$price 
-			 WHERE id = $customer_id;"
+			 WHERE id = $customer_id;",
+			$users_db_link
 		);
 
 		$insert = mysql_query(
 			"INSERT INTO orders (title, content, price, customer_id, customer_name, is_completed, is_deleted)
-			 VALUES ('$title', '$content', $price, $customer_id, '$customer_name', FALSE, FALSE);"
+			 VALUES ('$title', '$content', $price, $customer_id, '$customer_name', FALSE, FALSE);",
+			$orders_db_link
 		);
 
 		if (!$update || !$insert) {
-			die(mysql_error());
-			mysql_query("ROLLBACK");
+			rollback_transaction();
 			return 0;
 		}
 
-		$id = mysql_insert_id();
-		mysql_query("COMMIT");
+		$id = mysql_insert_id($orders_db_link);
+
+		commit_transaction();
 		
 		return $id;
 	}
 
 	function cancel_order_query($customer_id, $order_id) {
-		mysql_query("START TRANSACTION");
+		global $orders_db_link, $users_db_link;
+
+		start_transaction();
+
+		$price = _get_order_price($order_id, $orders_db_link);
 
 		$dec = mysql_query(
 			"UPDATE users 
 			 SET order_count = order_count-1,
-			     balance = balance + (SELECT price FROM orders WHERE id = $order_id)
-			 WHERE id = $customer_id;"
+			     balance = balance + $price
+			 WHERE id = $customer_id;",
+			$users_db_link
 		);
 
 		$cancel = mysql_query(
@@ -81,24 +94,27 @@
 			 WHERE customer_id = $customer_id AND 
 			 	   id = $order_id AND 
 			 	   is_completed = FALSE AND 
-			 	   is_deleted = FALSE;"
+			 	   is_deleted = FALSE;",
+			$orders_db_link
 		);
 
-		if (!$dec || !$cancel || !mysql_affected_rows()) {
-			mysql_query("ROLLBACK");
+		if (!$dec || !$cancel || !mysql_affected_rows($orders_db_link)) {
+			rollback_transaction();
 			return 0;
 		}
 
-		mysql_query("COMMIT");
+		commit_transaction();
 		return 1;
 	}
 
 	function take_order_query($contractor_id, $order_id) {
-		mysql_query("START TRANSACTION");
+		global $orders_db_link, $users_db_link;
 
-		$price = _get_order_price($order_id);
+		start_transaction();
+
+		$price = _get_order_price($order_id, $orders_db_link);
 		if ($price == 0) {
-			mysql_query("ROLLBACK");
+			rollback_transaction();
 			return 0;
 		}
 
@@ -109,11 +125,12 @@
 			"UPDATE users 
 			 SET order_count = order_count+1,
 				 balance = balance + $user_portion
-			 WHERE id = $contractor_id;"
+			 WHERE id = $contractor_id;",
+			$users_db_link
 		);
 
-		if (!$inc || !mysql_affected_rows()) {
-			mysql_query("ROLLBACK");
+		if (!$inc || !mysql_affected_rows($users_db_link)) {
+			rollback_transaction();
 			return 0;
 		}
 
@@ -122,21 +139,22 @@
 			 SET is_completed = TRUE 
 			 WHERE id = $order_id AND 
 				   is_completed = FALSE AND
-				   is_deleted = FALSE;"
+				   is_deleted = FALSE;",
+			$orders_db_link
 		);
 
-		if (!$take || !mysql_affected_rows()) {
-			mysql_query("ROLLBACK");
+		if (!$take || !mysql_affected_rows($orders_db_link)) {
+			rollback_transaction();
 			return 0;
 		}
 
-		mysql_query("COMMIT");
+		commit_transaction();
 		return 1;
 	}
 
-	function _get_order_price($order_id) {
+	function _get_order_price($order_id, $link) {
 		$result = mysql_query(
-			"SELECT price FROM orders WHERE id = $order_id;"
+			"SELECT price FROM orders WHERE id = $order_id;", $link
 		);
 
 		if (!$result || !mysql_num_rows($result)) {

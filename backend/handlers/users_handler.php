@@ -4,7 +4,7 @@
 	require_once('backend/db/users_queries.php');
 	require_once('backend/auth.php');
 
-	db_connect();
+	db_connect2();
 
 	function inc_balance_handler() {
 		global $context_user_id;

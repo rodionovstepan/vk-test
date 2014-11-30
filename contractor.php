@@ -11,7 +11,7 @@
 	require_once('backend/db/users_queries.php');
 	require_once('backend/db/orders_queries.php');
 
-	db_connect();
+	db_connect2();
 
 	$user_info = get_user_info_query($context_user_id);
 	if ($user_info == NULL) {
