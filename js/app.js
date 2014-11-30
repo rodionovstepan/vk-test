@@ -173,7 +173,7 @@ aos.addOrder = function() {
 	
 	var title = $('#order_title').val(),
 		content = $('#order_content').val(),
-		price = $('#order_price').val();
+		price = $('#order_price').val().replace(',', '.');
 
 	if (title.trim() == '') {
 		aos.showFormValidation(aos.lang.order_title_is_required);
@@ -190,7 +190,7 @@ aos.addOrder = function() {
 		return false;
 	}
 
-	var pp = parseFloat(price.replace(',', '.'));
+	var pp = parseFloat(price);
 	if (!aos.isValidOrderPrice(price) || isNaN(pp)) {
 		aos.showFormValidation(aos.lang.invalid_order_price);
 		return false;

@@ -3,7 +3,7 @@
 	function aos_money($val) {
 		return is_float($val)
 			? number_format($val, 2, '.', '')
-			: $val;
+			: str_replace(',', '.', $val);
 	}
 
 	function aos_money_compare($user_balance, $price) {
