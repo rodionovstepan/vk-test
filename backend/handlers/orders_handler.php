@@ -70,7 +70,7 @@
 
 		$user_info = get_user_info_query($context_user_id);
 
-		if ($user_info && aos_money_compare($user_info['balance'], $price) < 0) {
+		if (!$user_info || aos_money_compare($user_info['balance'], $price) < 0) {
 			return array('success' => false, 'code' => 3);
 		}
 
