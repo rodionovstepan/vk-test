@@ -2,7 +2,7 @@
 
 	require_once('backend/context.php');
 
-	if (empty($context_user_id)) {
+	if (empty($context_user_id) || $context_user_role != CONTRACTOR_ROLE) {
 		header('Location: /');
 		exit();
 	}
@@ -35,7 +35,7 @@
 			</div>
 			<div>
 				Баланс: <span id="contractor_balance"><?= $balance ?></span><br/><br/>
-				Выполнено заказов: <span id="contractor_order_count"><?= $order_count ?></span>
+				Выполненных заказов: <span id="contractor_order_count"><?= $order_count ?></span>
 			</div>
 		</div>
 	</div>

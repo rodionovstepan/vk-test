@@ -14,9 +14,12 @@
 		if ($id > 0) {
 			$user_id = $id;
 		}
+	} else if ($context_user_role != CUSTOMER_ROLE) {
+		header('Location: /');
+		exit();
 	}
 
-	$add_order = $_GET['act'] == 'add_order';
+	$add_order = $_GET['act'] == 'add_order' && $context_user_role == CUSTOMER_ROLE;
 
 	require_once('backend/db/connect.php');
 	require_once('backend/db/users_queries.php');
@@ -34,8 +37,8 @@
 		$orders = get_customer_active_orders_query($user_id);
 	}
 
-	$order_count = $user_info['order_count'];
 	$balance = $user_info['balance'];
+	$order_count = $user_info['order_count'];
 
 	if (!$is_ajax) {
 		include 'html/context_page_header.html';
@@ -54,7 +57,7 @@
 						echo "<span id=\"customer_balance\">$balance</span><br/><br/>";
 					}
 				?>
-				Всего заказов: <span id="customer_order_count"><?= $order_count ?></span>
+				Всего опубликовал заказов: <span id="customer_order_count"><?= $order_count ?></span>
 			</div>
 		</div>
 		<?php
