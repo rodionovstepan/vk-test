@@ -88,8 +88,7 @@ aos.register = function() {
 		role: role
 	}, function (data) {
 		if (data.success) {
-			window.location = data.url;
-			return;
+			return aos.go(data.url);
 		}
 
 		switch (data.code) {
@@ -142,8 +141,7 @@ aos.login = function() {
 		pwd: pwd
 	}, function(data) {
 		if (data.success) {
-			window.location = data.url;
-			return;
+			return aos.go(data.url);
 		}
 
 		switch (data.code) {
@@ -160,10 +158,6 @@ aos.login = function() {
 				aos.showFormValidation(aos.lang.something_goes_wrong);
 		}
 	});
-};
-
-aos.goToCustomer = function() {
-	window.location = 'customer.php';
 };
 
 aos.addOrder = function() {
@@ -202,8 +196,7 @@ aos.addOrder = function() {
 		price: price
 	}, function(data) {
 		if (data.success) {
-			window.location = 'customer.php';
-			return;
+			return aos.go('customer.php');
 		}
 
 		switch (data.code) {
@@ -290,3 +283,19 @@ aos.takeOrder = function(id) {
 		}
 	});
 };
+
+aos.go = function (url) {
+	$.get(url, {}, function(html, status) {
+		if (status === 'success') {
+			$('#content').html(html);
+		}
+	});
+
+	return false;
+};
+
+$(function() {
+	$(document).on('click', 'a:not(.noajax)', function() {
+		return aos.go($(this).attr('href'));
+	});
+});
