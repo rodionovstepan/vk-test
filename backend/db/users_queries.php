@@ -4,12 +4,8 @@
 		$result = mysql_query(
 			"SELECT count(id) FROM users WHERE email = '$email';"
 		);
-		//													TODO!!!!!!
-		if (!$result) {
-			die(mysql_error());
-		}
 
-		return mysql_result($result, 0) > 0;
+		return !$result || mysql_result($result, 0) > 0;
 	}
 
 	function register_user_query($username, $email, $pwd, $role) {
@@ -36,11 +32,7 @@
 			       password_hash = '$pwdhash';"
 		);
 
-		if (!$result) {
-			die(mysql_error());
-		}
-
-		if (mysql_num_rows($result) == 0) {
+		if (!$result || !mysql_num_rows($result)) {
 			return NULL;
 		}
 
