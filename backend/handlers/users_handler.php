@@ -43,10 +43,16 @@
 			return $validation;
 		}
 
-		$id = register_user_query($username, $email, $email_hash, $pwd, $role);
+		$result = register_user_query($username, $email, $email_hash, $pwd, $role);
 
-		if ($id) {
-			login_user(array('id' => $id, 'role' => $role, 'username' => $username));
+		if ($result > 0) {
+			login_user(array(
+				'id' => $result, 
+				'role' => $role, 
+				'username' => $username)
+			);
+		} else if ($result < 0) {
+			return array('success' => false, 'code' => (-1) * $result);
 		} else {
 			return array('success' => false, 'code' => 7);
 		}
@@ -75,10 +81,6 @@
 
 		if ($role != CUSTOMER_ROLE && $role != CONTRACTOR_ROLE) {
 			return array('success' => false, 'code' => 5);
-		}
-
-		if (is_user_registered_query($email_hash)) {
-			return array('success' => false, 'code' => 6);
 		}
 
 		return array('success' => true);

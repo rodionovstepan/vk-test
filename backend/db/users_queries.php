@@ -1,20 +1,21 @@
 <?php
 	
-	function is_user_registered_query($email_hash) {
-		global $users_db_link;
-
-		$result = mysql_query(
-			"SELECT count(id) FROM users WHERE email_hash = '$email_hash';",
-			$users_db_link
-		);
-
-		return !$result || mysql_result($result, 0) > 0;
-	}
-
 	function register_user_query($username, $email, $email_hash, $pwd, $role) {
 		global $users_db_link;
 
 		$pwd_hash = md5(md5($pwd));
+
+		start_transaction();
+
+		$registered = mysql_query(
+			"SELECT count(id) FROM users WHERE email_hash = '$email_hash';",
+			$users_db_link
+		);
+
+		if (!$registered || mysql_result($registered, 0) > 0) {
+			rollback_transaction();
+			return -6;
+		}
 
 		$result = mysql_query(
 			"INSERT INTO users (username, email, email_hash, password_hash, role) 
@@ -23,10 +24,14 @@
 		);
 
 		if (!$result || !mysql_affected_rows($users_db_link)) {
+			rollback_transaction();
 			return 0;
 		}
 
-		return mysql_insert_id($users_db_link);
+		$id = mysql_insert_id($users_db_link);
+
+		commit_transaction();
+		return $id;
 	}
 
 	function get_user_by_email_pwd_query($email, $pwd) {

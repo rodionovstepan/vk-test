@@ -9,13 +9,17 @@
 	}
 
 	function logout_user() {
-		unset($context_user_id);
-		unset($context_user_role);
-		unset($context_user_name);
-		unset($_SESSION['uid']);
-		unset($_SESSION['urole']);
-		unset($_SESSION['uname']);
-		session_destroy();
+		if (!empty($_SESSION['uid']) && !empty($_SESSION['urole']) && !empty($_SESSION['uname'])) {
+			unset($context_user_id);
+			unset($context_user_role);
+			unset($context_user_name);
+
+			unset($_SESSION['uid']);
+			unset($_SESSION['urole']);
+			unset($_SESSION['uname']);
+			
+			session_destroy();
+		}
 	}
 
 ?>
