@@ -64,7 +64,7 @@
 		$id = mysql_insert_id($orders_db_link);
 
 		$event = mysql_query(
-			"INSERT INTO events (order_id, type) VALUES ($id, 1);", 
+			"INSERT INTO events (order_id, type, profit) VALUES ($id, 1, 0);", 
 			$events_db_link
 		);
 
@@ -104,7 +104,7 @@
 
 		$canceled = mysql_affected_rows($orders_db_link);
 		$event = mysql_query(
-			"INSERT INTO events (order_id, type) VALUES ($order_id, 2);", 
+			"INSERT INTO events (order_id, type, profit) VALUES ($order_id, 2, 0);", 
 			$events_db_link
 		);
 
@@ -150,7 +150,7 @@
 
 		$taken = mysql_affected_rows($orders_db_link);
 		$event = mysql_query(
-			"INSERT INTO events (order_id, type) VALUES ($order_id, 3);", 
+			"INSERT INTO events (order_id, type, profit) VALUES ($order_id, 3, $aos_portion);", 
 			$events_db_link
 		);
 
