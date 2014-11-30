@@ -2,13 +2,12 @@
 
 	require_once('backend/context.php');
 
-	if (empty($context_user_id)) {
-		header('Location: /');
-		exit();
-	}
-
 	if (!$is_ajax) {
-		include 'html/context_page_header.html';
+		if (empty($context_user_id)) {
+			include 'html/no_context_page_header.html';
+		} else {
+			include 'html/context_page_header.html';
+		}
 	}
 
 ?>
@@ -23,7 +22,10 @@
 <?php
 	
 	if (!$is_ajax) {
-		include 'html/context_page_footer.html';
+		if (empty($context_user_id)) {
+			include 'html/no_context_page_footer.html';
+		} else {
+			include 'html/context_page_footer.html';
+		}
 	}
-
 ?>
