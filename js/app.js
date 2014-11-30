@@ -284,18 +284,32 @@ aos.takeOrder = function(id) {
 	});
 };
 
-aos.go = function (url) {
+aos.go = function (url, manual) {
 	$.get(url, {}, function(html, status) {
 		if (status === 'success') {
 			$('#content').html(html);
+
+			if (!manual) {
+				aos.pushUrl(url);
+			}
 		}
 	});
 
 	return false;
 };
 
+aos.pushUrl = function (url) {
+	window.history.pushState({ data: url }, document.title, url);
+};
+
 $(function() {
-	$(document).on('click', 'a:not(.noajax)', function() {
+	$(document).on('click', 'a', function() {
 		return aos.go($(this).attr('href'));
+	});
+
+	$(window).bind('popstate', function(e) {
+		if (e.originalEvent.state && e.originalEvent.state.data) {
+			aos.go(e.originalEvent.state.data, true);
+		}
 	});
 });
