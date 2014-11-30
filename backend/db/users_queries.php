@@ -27,7 +27,8 @@
 		$pwdhash = md5(md5($pwd));
 
 		$result = mysql_query(
-			"SELECT id, username, role FROM users
+			"SELECT id, username, role 
+			 FROM users
 			 WHERE email = '$email' AND 
 			       password_hash = '$pwdhash';"
 		);
