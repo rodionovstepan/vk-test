@@ -32,11 +32,11 @@
 	}
 
 	function _register_all_fields() {
-		return isset($_POST['username']) && 
-			   isset($_POST['email']) && 
-			   isset($_POST['pwd']) && 
-			   isset($_POST['repwd']) &&
-			   isset($_POST['role']);
+		return !empty($_POST['username']) && 
+			   !empty($_POST['email']) && 
+			   !empty($_POST['pwd']) && 
+			   !empty($_POST['repwd']) &&
+			   !empty($_POST['role']);
 	}
 
 ?>
