@@ -22,4 +22,5 @@
 	define('DB_EVENTS_USER', 'root');
 	define('DB_EVENTS_PWD', '');
 	define('DB_EVENTS_NAME', 'aos_events');
+	
 ?>
