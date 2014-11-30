@@ -3,6 +3,7 @@
 	require_once('backend/db/connect.php');
 	require_once('backend/db/orders_queries.php');
 	require_once('backend/db/users_queries.php');
+	require_once('backend/money.php');
 
 	db_connect();
 
@@ -14,7 +15,7 @@
 			return $validation;
 		}
 
-		if (add_order_query($context_user_id, $context_user_name, $title, $content, $price)) {
+		if (add_order_query($context_user_id, $context_user_name, $title, $content, aos_money($price))) {
 			return array('success' => true);
 		} else {
 			return array('success' => false, 'code' => 4);
@@ -63,12 +64,12 @@
 			return array('success' => false, 'code' => 1);
 		}
 
-		if (!preg_match('/^\d{1,14}([\,\.]\d{1,2})?$/', $price)) {
+		if (!preg_match('/^\d{1,15}([\,\.]\d{1,2})?$/', $price) || floatval($price) <= 0) {
 			return array('success' => false, 'code' => 2);
 		}
 
 		$user_info = get_user_info_query($context_user_id);
-		if (bccomp(number_format($user_info['balance'], 2, '.', ''), $price, 2) < 0) {
+		if (aos_money_compare($user_info['balance'], $price) < 0) {
 			return array('success' => false, 'code' => 3);
 		}
 
