@@ -94,7 +94,8 @@ aos.register = function() {
 		role: role
 	}, function (data) {
 		if (data.success) {
-			return aos.go(data.url);
+			window.location = data.url;
+			return;
 		}
 
 		switch (data.code) {
@@ -149,7 +150,8 @@ aos.login = function() {
 		pwd: pwd
 	}, function(data) {
 		if (data.success) {
-			return aos.go(data.url);
+			window.location = data.url;
+			return;
 		}
 
 		switch (data.code) {
@@ -166,6 +168,11 @@ aos.login = function() {
 				aos.showFormValidation(aos.lang.something_goes_wrong);
 		}
 	});
+};
+
+aos.logout = function() {
+	window.location = 'logout.php';
+	return false;
 };
 
 aos.addOrder = function() {
