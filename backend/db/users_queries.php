@@ -1,8 +1,10 @@
 <?php
 	
 	function is_user_registered_query($email) {
-		$result = mysql_query("SELECT count(id) FROM users WHERE email = '" . $email . "';");
-		
+		$result = mysql_query(
+			"SELECT count(id) FROM users WHERE email = '$email';"
+		);
+		//													TODO!!!!!!
 		if (!$result) {
 			die(mysql_error());
 		}
@@ -15,7 +17,8 @@
 
 		$result = mysql_query(
 			"INSERT INTO users (username, email, password_hash, role) 
-			 VALUES ('" . $username . "', '" . $email . "', '" . $pwdhash . "', " . $role . ");");
+			 VALUES ('$username', '$email', '$pwdhash', $role);"
+		);
 
 		if (!$result || !mysql_affected_rows()) {
 			return 0;
@@ -29,8 +32,9 @@
 
 		$result = mysql_query(
 			"SELECT id, username, role FROM users
-			 WHERE email = '" . $email . "'
-			 AND   password_hash = '" . $pwdhash . "';");
+			 WHERE email = '$email' AND 
+			       password_hash = '$pwdhash';"
+		);
 
 		if (!$result) {
 			die(mysql_error());
@@ -47,13 +51,10 @@
 		$result = mysql_query(
 			"SELECT balance, order_count, username
 			 FROM users 
-			 WHERE id = " . $id . ";");
+			 WHERE id = $id;"
+		);
 
-		if (!$result) {
-			die(mysql_error());
-		}
-
-		if (mysql_num_rows($result) == 0) {
+		if (!$result || !mysql_num_rows($result)) {
 			return NULL;
 		}
 
@@ -62,22 +63,24 @@
 
 	function inc_balance_query($customer_id, $value) {
 		$result = mysql_query(
-			"UPDATE users SET balance = balance+" . $value . " WHERE id = " . $customer_id . ";");
+			"UPDATE users 
+			 SET balance = balance+$value 
+			 WHERE id = $customer_id;"
+		);
+
+		if (!$result || !mysql_affected_rows()) {
+			return 0;
+		}
+
+		$result = mysql_query(
+			"SELECT balance FROM users WHERE id = $customer_id;"
+		);
 
 		if (!$result) {
-			die(mysql_error());
+			return 0;
 		}
 
-		if (mysql_affected_rows()) {
-			$result = mysql_query("SELECT balance FROM users WHERE id = " . $customer_id . ";");
-			if (!$result) {
-				die(mysql_error());
-			}
-
-			$row = mysql_fetch_array($result);
-			return $row[0];
-		}
-
-		return 0;
+		$row = mysql_fetch_array($result);
+		return $row[0];
 	}
 ?>

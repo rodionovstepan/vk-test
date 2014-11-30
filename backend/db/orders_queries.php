@@ -4,11 +4,11 @@
 		$result = mysql_query(
 			"SELECT id, title, content, price, customer_id, customer_name
 			 FROM orders
-			 WHERE is_completed = FALSE AND is_deleted = FALSE AND customer_id = " . $customer_id . " 
+			 WHERE is_completed = FALSE AND is_deleted = FALSE AND customer_id = $customer_id 
 			 ORDER BY id DESC;");
 
 		if (!$result) {
-			die(mysql_error());
+			return array();
 		}
 
 		$rows = array();
@@ -27,7 +27,7 @@
 			 ORDER BY id DESC;");
 
 		if (!$result) {
-			die(mysql_error());
+			return array();
 		}
 
 		$rows = array();
@@ -42,22 +42,23 @@
 		mysql_query("START TRANSACTION");
 
 		$update = mysql_query(
-			"UPDATE users SET order_count = order_count+1, balance = balance-" . $price . " WHERE id = " . $customer_id . ";"
+			"UPDATE users SET order_count = order_count+1, balance = balance-$price WHERE id = $customer_id;"
 		);
 
 		$insert = mysql_query(
 			"INSERT INTO orders (title, content, price, customer_id, customer_name, is_completed, is_deleted)
-			 VALUES ('" . $title . "', '" . $content . "', " . $price . ", " . $customer_id . ", '" . $customer_name . "', FALSE, FALSE);"
+			 VALUES ('$title', '$content', $price, $customer_id, '$customer_name', FALSE, FALSE);"
 		);
 
-		$id = mysql_insert_id();
-
 		if (!$update || !$insert) {
+			die(mysql_error());
 			mysql_query("ROLLBACK");
 			return 0;
-		} 
+		}
 
+		$id = mysql_insert_id();
 		mysql_query("COMMIT");
+		
 		return $id;
 	}
 
@@ -67,12 +68,17 @@
 		$dec = mysql_query(
 			"UPDATE users 
 			 SET order_count = order_count-1,
-			     balance = balance + (SELECT price FROM orders WHERE id = " . $order_id . ")
-			 WHERE id = " . $customer_id . ";"
+			     balance = balance + (SELECT price FROM orders WHERE id = $order_id)
+			 WHERE id = $customer_id;"
 		);
 
 		$cancel = mysql_query(
-			"UPDATE orders SET is_deleted = TRUE WHERE customer_id = " . $customer_id . " AND id = " . $order_id . " AND is_completed = FALSE AND is_deleted = FALSE;"
+			"UPDATE orders 
+			 SET is_deleted = TRUE 
+			 WHERE customer_id = $customer_id AND 
+			 	   id = $order_id AND 
+			 	   is_completed = FALSE AND 
+			 	   is_deleted = FALSE;"
 		);
 
 		if (!$dec || !$cancel || !mysql_affected_rows()) {
@@ -96,21 +102,25 @@
 		$aos_portion = aos_money_mul($price, SYSTEM_PERCENT/100.0);
 		$user_portion = aos_money_sub($price, $aos_portion);
 
-		$inc = mysql_query("UPDATE users 
-							SET order_count = order_count+1,
-								balance = balance + " . $user_portion . "
-							WHERE id = " . $contractor_id . ";");
+		$inc = mysql_query(
+			"UPDATE users 
+			 SET order_count = order_count+1,
+				 balance = balance + $user_portion
+			 WHERE id = $contractor_id;"
+		);
 
 		if (!$inc || !mysql_affected_rows()) {
 			mysql_query("ROLLBACK");
 			return 0;
 		}
 
-		$take = mysql_query("UPDATE orders 
-							 SET is_completed = TRUE 
-							 WHERE id = " . $order_id . " AND 
-							 	   is_completed = FALSE AND
-							 	   is_deleted = FALSE;");
+		$take = mysql_query(
+			"UPDATE orders 
+			 SET is_completed = TRUE 
+			 WHERE id = $order_id AND 
+				   is_completed = FALSE AND
+				   is_deleted = FALSE;"
+		);
 
 		if (!$take || !mysql_affected_rows()) {
 			mysql_query("ROLLBACK");
@@ -122,9 +132,11 @@
 	}
 
 	function _get_order_price($order_id) {
-		$result = mysql_query("SELECT price FROM orders WHERE id = " . $order_id . ";");
+		$result = mysql_query(
+			"SELECT price FROM orders WHERE id = $order_id;"
+		);
 
-		if (!$result || mysql_num_rows($result) == 0) {
+		if (!$result || !mysql_num_rows($result)) {
 			return 0;
 		}
 
