@@ -61,14 +61,17 @@
 			$orders_db_link
 		);
 
-		if (!$update || !$insert) {
+		$id = mysql_insert_id($orders_db_link);
+
+		$event = mysql_query(
+			"INSERT INTO events (order_id, type) VALUES ($id, 1);", 
+			$events_db_link
+		);
+
+		if (!$update || !$insert || !$event) {
 			rollback_transaction();
 			return 0;
 		}
-
-		$id = mysql_insert_id($orders_db_link);
-
-		mysql_query("INSERT INTO events (order_id, type) VALUES ($id, 1);", $events_db_link);
 
 		commit_transaction();
 		
@@ -81,7 +84,6 @@
 		start_transaction();
 
 		$price = _get_order_price($order_id, $orders_db_link);
-
 		$dec = mysql_query(
 			"UPDATE users 
 			 SET order_count = order_count-1,
@@ -100,12 +102,16 @@
 			$orders_db_link
 		);
 
-		if (!$dec || !$cancel || !mysql_affected_rows($orders_db_link)) {
+		$canceled = mysql_affected_rows($orders_db_link);
+		$event = mysql_query(
+			"INSERT INTO events (order_id, type) VALUES ($order_id, 2);", 
+			$events_db_link
+		);
+
+		if (!$dec || !$cancel || !$canceled || !$event) {
 			rollback_transaction();
 			return 0;
 		}
-
-		mysql_query("INSERT INTO events (order_id, type) VALUES ($order_id, 2);", $events_db_link);
 
 		commit_transaction();
 		return 1;
@@ -133,11 +139,6 @@
 			$users_db_link
 		);
 
-		if (!$inc || !mysql_affected_rows($users_db_link)) {
-			rollback_transaction();
-			return 0;
-		}
-
 		$take = mysql_query(
 			"UPDATE orders 
 			 SET is_completed = TRUE 
@@ -147,12 +148,16 @@
 			$orders_db_link
 		);
 
-		if (!$take || !mysql_affected_rows($orders_db_link)) {
+		$taken = mysql_affected_rows($orders_db_link);
+		$event = mysql_query(
+			"INSERT INTO events (order_id, type) VALUES ($order_id, 3);", 
+			$events_db_link
+		);
+
+		if (!$inc || !$take || !$taken || !$event) {
 			rollback_transaction();
 			return 0;
 		}
-
-		mysql_query("INSERT INTO events (order_id, type) VALUES ($order_id, 3);", $events_db_link);
 
 		commit_transaction();
 		return 1;
