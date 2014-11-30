@@ -6,7 +6,6 @@
 	if ($act == 'inc_balance') {
 		if (empty($context_user_id)) {
 			invalid_request();
-			exit();
 		}
 
 		echo json_encode(inc_balance_handler());
