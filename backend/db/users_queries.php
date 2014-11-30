@@ -1,19 +1,19 @@
 <?php
 	
-	function is_user_registered_query($email) {
+	function is_user_registered_query($email_hash) {
 		$result = mysql_query(
-			"SELECT count(id) FROM users WHERE email = '$email';"
+			"SELECT count(id) FROM users WHERE email_hash = '$email_hash';"
 		);
 
 		return !$result || mysql_result($result, 0) > 0;
 	}
 
-	function register_user_query($username, $email, $pwd, $role) {
-		$pwdhash = md5(md5($pwd));
+	function register_user_query($username, $email, $email_hash, $pwd, $role) {
+		$pwd_hash = md5(md5($pwd));
 
 		$result = mysql_query(
-			"INSERT INTO users (username, email, password_hash, role) 
-			 VALUES ('$username', '$email', '$pwdhash', $role);"
+			"INSERT INTO users (username, email, email_hash, password_hash, role) 
+			 VALUES ('$username', '$email', '$email_hash', '$pwd_hash', $role);"
 		);
 
 		if (!$result || !mysql_affected_rows()) {
@@ -24,13 +24,14 @@
 	}
 
 	function get_user_by_email_pwd_query($email, $pwd) {
-		$pwdhash = md5(md5($pwd));
+		$pwd_hash = md5(md5($pwd));
+		$email_hash = md5($email);
 
 		$result = mysql_query(
 			"SELECT id, username, role 
 			 FROM users
-			 WHERE email = '$email' AND 
-			       password_hash = '$pwdhash';"
+			 WHERE email_hash = '$email_hash' AND 
+			       password_hash = '$pwd_hash';"
 		);
 
 		if (!$result || !mysql_num_rows($result)) {

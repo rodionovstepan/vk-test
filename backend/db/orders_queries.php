@@ -42,7 +42,10 @@
 		mysql_query("START TRANSACTION");
 
 		$update = mysql_query(
-			"UPDATE users SET order_count = order_count+1, balance = balance-$price WHERE id = $customer_id;"
+			"UPDATE users 
+			 SET order_count = order_count+1, 
+			 	 balance = balance-$price 
+			 WHERE id = $customer_id;"
 		);
 
 		$insert = mysql_query(
