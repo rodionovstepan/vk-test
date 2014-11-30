@@ -17,7 +17,7 @@ aos.isValidOrderPrice = function(price) {
 	if (typeof price !== 'string')
 		return false;
 
-	var re = /^\d{1,15}([\,\.]\d{1,2})?$/;
+	var re = /^\d{2,12}([\,\.]\d{1,2})?$/;
 	return re.test(price);
 };
 
@@ -201,7 +201,7 @@ aos.addOrder = function() {
 	if (!aos.isValidOrderPrice(price) || isNaN(pp)) {
 		aos.showFormValidation(aos.lang.invalid_order_price);
 		return false;
-	} else if (pp == 0) {
+	} else if (pp < 10) {
 		aos.showFormValidation(aos.lang.negative_order_price);
 		return false;
 	}

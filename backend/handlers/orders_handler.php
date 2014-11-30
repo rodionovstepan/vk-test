@@ -64,7 +64,7 @@
 			return array('success' => false, 'code' => 1);
 		}
 
-		if (!preg_match('/^\d{1,15}([\,\.]\d{1,2})?$/', $price) || floatval($price) <= 0) {
+		if (!preg_match('/^\d{2,12}([\,\.]\d{1,2})?$/', $price) || floatval($price) < 10) {
 			return array('success' => false, 'code' => 2);
 		}
 
