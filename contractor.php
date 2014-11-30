@@ -2,7 +2,7 @@
 
 	require_once('backend/context.php');
 
-	if (!isset($context_user_id)) {
+	if (empty($context_user_id)) {
 		header('Location: /');
 		exit();
 	}

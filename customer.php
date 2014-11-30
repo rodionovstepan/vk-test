@@ -2,7 +2,7 @@
 	
 	require_once('backend/context.php');
 	
-	if (!isset($context_user_id)) {
+	if (empty($context_user_id)) {
 		header('Location: /');
 		exit();
 	}
@@ -60,9 +60,9 @@
 		<?php
 			if ($context_user_id == $user_id) {
 				if (!$add_order) {
-					require 'html/context_customer_menu.html';
+					include 'html/context_customer_menu.html';
 				} else {
-					require 'html/add_order_customer_menu.html';
+					include 'html/add_order_customer_menu.html';
 				}
 			}
 		?>
@@ -80,9 +80,9 @@
 		<div id="page_content_wrapper">
 			<?php
 				if ($add_order) {
-					require 'html/new_order_form.html';
+					include 'html/new_order_form.html';
 				} else {
-					require_once 'backend/render.php';
+					require_once('backend/render.php');
 
 					if (count($orders)) {
 						foreach ($orders as $order) {
