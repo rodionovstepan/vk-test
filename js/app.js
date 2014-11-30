@@ -4,6 +4,10 @@ aos.showFormValidation = function(msg) {
 	$('.js_validation').text(msg).fadeIn();
 };
 
+aos.hideFormValidation = function() {
+	$('.js_validation').hide();
+}
+
 aos.isValidEmail = function(email) {
 	var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 	return re.test(email);
@@ -53,6 +57,8 @@ aos.showTempError = function(el, nowtext, latertext) {
 };
 
 aos.register = function() {
+	aos.hideFormValidation();
+
 	var username = $('#username').val(),
 		email = $('#email').val(),
 		pwd = $('#pwd').val(),
@@ -117,6 +123,8 @@ aos.register = function() {
 };
 
 aos.login = function() {
+	aos.hideFormValidation();
+
 	var email = $('#email').val(),
 		pwd = $('#pwd').val();
 
@@ -161,6 +169,8 @@ aos.login = function() {
 };
 
 aos.addOrder = function() {
+	aos.hideFormValidation();
+	
 	var title = $('#order_title').val(),
 		content = $('#order_content').val(),
 		price = $('#order_price').val();
