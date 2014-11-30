@@ -43,7 +43,7 @@
 	}
 
 	function add_order_query($customer_id, $customer_name, $title, $content, $price) {
-		global $orders_db_link, $users_db_link;
+		global $orders_db_link, $users_db_link, $events_db_link;
 
 		start_transaction();
 
@@ -68,13 +68,15 @@
 
 		$id = mysql_insert_id($orders_db_link);
 
+		mysql_query("INSERT INTO events (order_id, type) VALUES ($id, 1);", $events_db_link);
+
 		commit_transaction();
 		
 		return $id;
 	}
 
 	function cancel_order_query($customer_id, $order_id) {
-		global $orders_db_link, $users_db_link;
+		global $orders_db_link, $users_db_link, $events_db_link;
 
 		start_transaction();
 
@@ -103,12 +105,14 @@
 			return 0;
 		}
 
+		mysql_query("INSERT INTO events (order_id, type) VALUES ($order_id, 2);", $events_db_link);
+
 		commit_transaction();
 		return 1;
 	}
 
 	function take_order_query($contractor_id, $order_id) {
-		global $orders_db_link, $users_db_link;
+		global $orders_db_link, $users_db_link, $events_db_link;
 
 		start_transaction();
 
@@ -147,6 +151,8 @@
 			rollback_transaction();
 			return 0;
 		}
+
+		mysql_query("INSERT INTO events (order_id, type) VALUES ($order_id, 3);", $events_db_link);
 
 		commit_transaction();
 		return 1;

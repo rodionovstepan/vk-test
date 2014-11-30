@@ -2,7 +2,7 @@
 
 	$users_db_link = NULL;
 	$orders_db_link = NULL;
-	$events_db_link = NULL:
+	$events_db_link = NULL;
 
 	function db_connect() {
 		global $users_db_link, $orders_db_link, $events_db_link;

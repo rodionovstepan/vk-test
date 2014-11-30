@@ -5,7 +5,7 @@
 	require_once('backend/db/users_queries.php');
 	require_once('backend/money.php');
 
-	db_connect2();
+	db_connect();
 
 	function add_order_handler($title, $content, $price) {
 		global $context_user_id, $context_user_name;

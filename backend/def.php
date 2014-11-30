@@ -4,6 +4,9 @@
 	define('CONTRACTOR_ROLE', 2);
 	define('SYSTEM_PERCENT', 10);
 	define('BALANCE_INC_PART', 1000);
+	define('ADD_ORDER_EVENT', 1);
+	define('CANCEL_ORDER_EVENT', 2);
+	define('TAKE_ORDER_EVENT', 3);
 
 	define('DB_USERS_HOST', 'localhost');
 	define('DB_USERS_USER', 'root');
