@@ -10,7 +10,7 @@
 		$bc_balance = aos_money($user_balance);
 		$bc_price = aos_money($price);
 
-		return bccomp($bc_balance, $bc_price);
+		return bccomp($bc_balance, $bc_price, 2);
 	}
 
 	function aos_money_mul($left, $right) {
