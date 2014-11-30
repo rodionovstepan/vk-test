@@ -304,6 +304,7 @@ aos.takeOrder = function(id) {
 aos.go = function (url, manual) {
 	$.get(url, {}, function(html, status) {
 		if (status === 'success') {
+			window.scrollTo(0, 0);
 			$('#content').html(html);
 
 			if (!manual) {
