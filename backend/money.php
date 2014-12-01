@@ -27,4 +27,11 @@
 		return bcsub($bc_left, $bc_right, 2);
 	}
 
+	function aos_money_add($left, $right) {
+		$bc_left = aos_money($left);
+		$bc_right = aos_money($right);
+
+		return bcadd($bc_left, $bc_right, 2);
+	}
+
 ?>
