@@ -57,7 +57,7 @@
 						echo "<span id=\"customer_balance\">$balance</span><br/><br/>";
 					}
 				?>
-				Всего опубликовал заказов: <span id="customer_order_count"><?= $order_count ?></span>
+				Опубликовал заказов: <span id="customer_order_count"><?= $order_count ?></span>
 			</div>
 		</div>
 		<?php
