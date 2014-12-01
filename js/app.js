@@ -292,11 +292,15 @@ aos.takeOrder = function(id) {
 			aos.orderFadeOut($order);
 		} else {
 			$order.addClass('order_danger');
-			$('.order_content', $order).text(aos.lang.cannot_take_order);
 
-			setTimeout(function() {
-				aos.orderFadeOut($order);
-			}, 5000);
+			if (data.code === 1) {
+				$('.order_content', $order).text(aos.lang.too_big_balance);
+			} else {
+				$('.order_content', $order).text(aos.lang.cannot_take_order);
+				setTimeout(function() {
+					aos.orderFadeOut($order);
+				}, 5000);
+			}
 		}
 	});
 };

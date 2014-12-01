@@ -43,8 +43,7 @@
 		global $context_user_id;
 
 		$result = take_order_query($context_user_id, $order_id);
-
-		if ($result) {
+		if ($result > 0) {
 			$user_info = get_user_info_query($context_user_id);
 
 			return array(
@@ -53,7 +52,7 @@
 				'ordercount' => $user_info['order_count']
 			);
 		} else {
-			return array('success' => false);
+			return array('success' => false, 'code' => (-1)*$result);
 		}
 	}
 
