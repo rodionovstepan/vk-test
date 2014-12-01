@@ -44,7 +44,7 @@ body {
 
 .page_welcome {
 	padding: 40px;
-	background-color: #eaeaea;
+	background-color: #f0f2f5;
 	border: solid 1px #ccc;
 	border-radius: 5px;
 	text-align: center;
@@ -67,16 +67,16 @@ body {
 }
 
 .form_validation {
-	background-color: #EAAF96;
-	border: solid 1px #842E2E;
+	background-color: #eaaf96;
+	border: solid 1px #842e2e;
 	margin: 15px auto;
 	padding: 10px 5px;
 	width: 380px;
 }
 
 .order_form_validation {
-	background-color: #EAAF96;
-	border: solid 1px #842E2E;
+	background-color: #eaaf96;
+	border: solid 1px #842e2e;
 	margin: 15px auto;
 	padding: 10px 5px;
 }

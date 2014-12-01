@@ -54,7 +54,7 @@
 			<div>
 				<?php 
 					if ($context_user_id == $user_id) {
-						echo "<span id=\"customer_balance\">$balance</span><br/><br/>";
+						echo "Баланс: <span id=\"customer_balance\">$balance</span><br/><br/>";
 					}
 				?>
 				Опубликовал заказов: <span id="customer_order_count"><?= $order_count ?></span>
