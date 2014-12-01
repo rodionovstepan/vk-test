@@ -123,13 +123,25 @@
 		start_transaction();
 
 		$price = _get_order_price($order_id, $orders_db_link);
-		if ($price == 0) {
+		if ($price < 0) {
+			rollback_transaction();
+			return 0;
+		}
+
+		$user_balance = _get_user_balance($contractor_id, $users_db_link);
+		if ($user_balance < 0) {
 			rollback_transaction();
 			return 0;
 		}
 
 		$aos_portion = aos_money_mul($price, SYSTEM_PERCENT/100.0);
 		$user_portion = aos_money_sub($price, $aos_portion);
+
+		$new_user_balance = aos_money_add($user_balance, $user_portion);
+		if (aos_money_compare(MAX_USER_BALANCE, $new_user_balance) < 0) {
+			rollback_transaction();
+			return -1;
+		}
 
 		$inc = mysql_query(
 			"UPDATE users 
@@ -169,7 +181,20 @@
 		);
 
 		if (!$result || !mysql_num_rows($result)) {
-			return 0;
+			return -1;
+		}
+
+		$row = mysql_fetch_array($result);
+		return $row[0];
+	}
+
+	function _get_user_balance($user_id, $link) {
+		$result = mysql_query(
+			"SELECT balance FROM users WHERE id = $user_id;", $link
+		);
+
+		if (!$result || !mysql_num_rows($result)) {
+			return -1;
 		}
 
 		$row = mysql_fetch_array($result);

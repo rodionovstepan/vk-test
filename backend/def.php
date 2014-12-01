@@ -7,6 +7,7 @@
 	define('ADD_ORDER_EVENT', 1);
 	define('CANCEL_ORDER_EVENT', 2);
 	define('TAKE_ORDER_EVENT', 3);
+	define('MAX_USER_BALANCE', '1000000000');
 
 	define('DB_USERS_HOST', 'localhost');
 	define('DB_USERS_USER', 'root');
