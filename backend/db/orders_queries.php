@@ -139,7 +139,7 @@
 			return -1;
 		}
 
-		$inc = mysql_query(
+		$inc = mysqli_query($users_db_link,
 			"UPDATE users 
 			 SET order_count = order_count+1,
 				 balance = balance + $user_portion
@@ -182,15 +182,15 @@
 	}
 
 	function _get_user_balance($user_id, $link) {
-		$result = mysql_query(
-			"SELECT balance FROM users WHERE id = $user_id;", $link
+		$result = mysqli_query($link,
+			"SELECT balance FROM users WHERE id = $user_id;"
 		);
 
-		if (!$result || !mysql_num_rows($result)) {
+		if (!$result || !mysqli_num_rows($result)) {
 			return -1;
 		}
 
-		$row = mysql_fetch_array($result);
+		$row = mysqli_fetch_array($result);
 		return $row[0];
 	}
 
