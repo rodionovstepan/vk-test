@@ -170,6 +170,8 @@ aos.login = function() {
 				aos.showFormValidation(aos.lang.something_goes_wrong);
 		}
 	});
+
+	return false;
 };
 
 aos.logout = function() {
