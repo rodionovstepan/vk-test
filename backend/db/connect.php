@@ -30,20 +30,25 @@
 		}
 	}
 
-	function start_transaction() {
-		_query_all("START TRANSACTION");
+	function start_transaction($link = NULL) {
+		_query("START TRANSACTION", $link);
 	}
 
-	function rollback_transaction() {
-		_query_all("ROLLBACK");
+	function rollback_transaction($link = NULL) {
+		_query("ROLLBACK", $link);
 	}
 
-	function commit_transaction() {
-		_query_all("COMMIT");
+	function commit_transaction($link = NULL) {
+		_query("COMMIT", $link);
 	}
 
-	function _query_all($query) {
+	function _query($query, $link) {
 		global $users_db_link, $orders_db_link, $events_db_link;
+
+		if (isset($link)) {
+			mysqli_query($link, $query);
+			return;
+		}
 
 		if (isset($users_db_link) && isset($orders_db_link) && isset($events_db_link)) {
 			mysqli_query($users_db_link, $query);

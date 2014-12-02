@@ -5,19 +5,19 @@
 
 		$pwd_hash = md5(md5($pwd));
 
-		start_transaction();
+		start_transaction($users_db_link);
 
 		$registered = mysqli_query($users_db_link,
 			"SELECT count(id) FROM users WHERE email_hash = '$email_hash';"
 		);
 
 		if (!$registered) {
-			rollback_transaction();
+			rollback_transaction($users_db_link);
 			return -6;
 		} else {
 			$count = mysqli_fetch_array($registered);
 			if ($count[0]) {
-				rollback_transaction();
+				rollback_transaction($users_db_link);
 				return -6;
 			}
 		}
@@ -28,13 +28,13 @@
 		);
 
 		if (!$result || !mysqli_affected_rows($users_db_link)) {
-			rollback_transaction();
+			rollback_transaction($users_db_link);
 			return 0;
 		}
 
 		$id = mysqli_insert_id($users_db_link);
 
-		commit_transaction();
+		commit_transaction($users_db_link);
 		return $id;
 	}
 
