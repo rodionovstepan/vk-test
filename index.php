@@ -47,7 +47,7 @@
 			<div class="form_item">
 				<a href="enter.php">Войти</a>
 			</div>
-		</div>
+		</form>
 	</div>
 </div>
 

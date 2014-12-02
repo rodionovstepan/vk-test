@@ -33,7 +33,7 @@
 			<div class="form_item">
 				<a href="/">На главную</a>
 			</div>
-		</div>
+		</form>
 	</div>
 </div>
 		

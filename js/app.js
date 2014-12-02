@@ -129,7 +129,7 @@ aos.login = function() {
 	aos.hideFormValidation();
 
 	var email = $('#email').val(),
-		pwd = $('#pwd').val();
+		 pwd = $('#pwd').val();
 
 	if (email.trim() == '' || pwd.trim() == '') {
 		aos.showFormValidation(aos.lang.username_and_email_are_required);

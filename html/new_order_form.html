@@ -1,14 +1,14 @@
 <form action="orders.php" method="POST" onsubmit="return false;">
 	<div class="order_form_validation js_validation" style="display:none;"></div>
 	<div class="form_item order_form_item">
-		<input type="text" id="order_title" placeholder="Заголовок заказа">
+		<input type="text" id="order_title" name="title" placeholder="Заголовок заказа">
 	</div>
 	<div class="form_item order_form_item">
-		<textarea id="order_content" placeholder="Описание заказа. Например: написать систему выполнения абстрактных заказов" rows="5"></textarea>
+		<textarea id="order_content" name="content" placeholder="Описание заказа. Например: написать систему выполнения абстрактных заказов" rows="5"></textarea>
 	</div>
 	<div class="form_item order_form_item order_price">
 		<div class="fl_l">
-			<input type="text" id="order_price" placeholder="Стоимость заказа">
+			<input type="text" id="order_price" name="price" placeholder="Стоимость заказа" maxlength="15">
 		</div>
 		<div class="order_price_inf">
 			измеряется в абстрактной валюте
@@ -19,4 +19,4 @@
 		<button type="submit" class="main_button" onclick="return aos.addOrder();">Создать заказ</button>
 		<button type="button" class="def_button" onclick="aos.go('customer.php');">Отмена</button>
 	</div>
-</div>
+</form>
