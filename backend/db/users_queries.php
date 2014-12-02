@@ -7,28 +7,32 @@
 
 		start_transaction();
 
-		$registered = mysql_query(
-			"SELECT count(id) FROM users WHERE email_hash = '$email_hash';",
-			$users_db_link
+		$registered = mysqli_query($users_db_link,
+			"SELECT count(id) FROM users WHERE email_hash = '$email_hash';"
 		);
 
-		if (!$registered || mysql_result($registered, 0) > 0) {
+		if (!$registered) {
 			rollback_transaction();
 			return -6;
+		} else {
+			$count = mysqli_fetch_array($registered);
+			if ($count[0]) {
+				rollback_transaction();
+				return -6;
+			}
 		}
 
-		$result = mysql_query(
+		$result = mysqli_query($users_db_link,
 			"INSERT INTO users (username, email, email_hash, password_hash, role) 
-			 VALUES ('$username', '$email', '$email_hash', '$pwd_hash', $role);",
-			$users_db_link
+			 VALUES ('$username', '$email', '$email_hash', '$pwd_hash', $role);"
 		);
 
-		if (!$result || !mysql_affected_rows($users_db_link)) {
+		if (!$result || !mysqli_affected_rows($users_db_link)) {
 			rollback_transaction();
 			return 0;
 		}
 
-		$id = mysql_insert_id($users_db_link);
+		$id = mysqli_insert_id($users_db_link);
 
 		commit_transaction();
 		return $id;
@@ -40,61 +44,58 @@
 		$pwd_hash = md5(md5($pwd));
 		$email_hash = md5($email);
 
-		$result = mysql_query(
+		$result = mysqli_query($users_db_link,
 			"SELECT id, username, role 
 			 FROM users
 			 WHERE email_hash = '$email_hash' AND 
-			       password_hash = '$pwd_hash';",
-			$users_db_link
+			       password_hash = '$pwd_hash';"
 		);
 
-		if (!$result || !mysql_num_rows($result)) {
+		if (!$result || !mysqli_num_rows($result)) {
 			return NULL;
 		}
 
-		return mysql_fetch_assoc($result);
+		return mysqli_fetch_assoc($result);
 	}
 
 	function get_user_info_query($id) {
 		global $users_db_link;
 
-		$result = mysql_query(
+		$result = mysqli_query($users_db_link,
 			"SELECT balance, order_count, username
 			 FROM users 
-			 WHERE id = $id;",
-			$users_db_link
+			 WHERE id = $id;"
 		);
 
-		if (!$result || !mysql_num_rows($result)) {
+		if (!$result || !mysqli_num_rows($result)) {
 			return NULL;
 		}
 
-		return mysql_fetch_assoc($result);
+		return mysqli_fetch_assoc($result);
 	}
 
 	function inc_balance_query($customer_id, $value) {
 		global $users_db_link;
 		
-		$result = mysql_query(
+		$result = mysqli_query($users_db_link,
 			"UPDATE users 
 			 SET balance = balance+$value 
-			 WHERE id = $customer_id;",
-			$users_db_link
+			 WHERE id = $customer_id;"			
 		);
 
-		if (!$result || !mysql_affected_rows($users_db_link)) {
+		if (!$result || !mysqli_affected_rows($users_db_link)) {
 			return 0;
 		}
 
-		$result = mysql_query(
-			"SELECT balance FROM users WHERE id = $customer_id;", $users_db_link
+		$result = mysqli_query($users_db_link,
+			"SELECT balance FROM users WHERE id = $customer_id;"
 		);
 
 		if (!$result) {
 			return 0;
 		}
 
-		$row = mysql_fetch_array($result);
+		$row = mysqli_fetch_array($result);
 		return $row[0];
 	}
 ?>

@@ -46,22 +46,22 @@
 		global $users_db_link, $orders_db_link, $events_db_link;
 
 		if (isset($users_db_link) && isset($orders_db_link) && isset($events_db_link)) {
-			mysql_query($query, $users_db_link);
+			mysqli_query($users_db_link, $query);
 
 			if ($users_db_link != $orders_db_link) {
-				mysql_query($query, $orders_db_link);
+				mysqli_query($orders_db_link, $query);
 			}
 
 			if ($users_db_link != $events_db_link && $orders_db_link != $events_db_link) {
-				mysql_query($query, $events_db_link);
+				mysqli_query($events_db_link, $query);
 			}
 		}
 	}
 
 	function _connect($host, $user, $pwd, $db_name) {
-		$link = mysql_connect($host, $user, $pwd, true) or die(mysql_error());
-		mysql_select_db($db_name, $link) or die(mysql_error());
-		mysql_set_charset('utf-8', $link);
+		$link = mysqli_connect($host, $user, $pwd) or die('Сайт временно недоступен');
+		mysqli_select_db($link, $db_name) or die('Сайт временно недоступен');
+		mysqli_set_charset($link, 'utf-8');
 
 		return $link;
 	}

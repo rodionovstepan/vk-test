@@ -3,18 +3,19 @@
 	function get_customer_active_orders_query($customer_id) {
 		global $orders_db_link;
 
-		$result = mysql_query(
+		$result = mysqli_query($orders_db_link,
 			"SELECT id, title, content, price, customer_id, customer_name
 			 FROM orders
 			 WHERE is_completed = FALSE AND is_deleted = FALSE AND customer_id = $customer_id 
-			 ORDER BY id DESC;", $orders_db_link);
+			 ORDER BY id DESC;"
+		);
 
 		if (!$result) {
 			return array();
 		}
 
 		$rows = array();
-		while($row = mysql_fetch_assoc($result)) {
+		while($row = mysqli_fetch_assoc($result)) {
 			$rows[] = $row;
 		}
 
@@ -24,18 +25,19 @@
 	function get_contractor_active_orders_query() {
 		global $orders_db_link;
 
-		$result = mysql_query(
+		$result = mysqli_query($orders_db_link, 
 			"SELECT id, title, content, price, customer_id, customer_name
 			 FROM orders
 			 WHERE is_completed = FALSE AND is_deleted = FALSE 
-			 ORDER BY id DESC;", $orders_db_link);
+			 ORDER BY id DESC;"
+		);
 
 		if (!$result) {
 			return array();
 		}
 
 		$rows = array();
-		while($row = mysql_fetch_assoc($result)) {
+		while($row = mysqli_fetch_assoc($result)) {
 			$rows[] = $row;
 		}
 
@@ -47,25 +49,22 @@
 
 		start_transaction();
 
-		$update = mysql_query(
+		$update = mysqli_query($users_db_link,
 			"UPDATE users 
 			 SET order_count = order_count+1, 
 			 	 balance = balance-$price 
-			 WHERE id = $customer_id;",
-			$users_db_link
+			 WHERE id = $customer_id;"
 		);
 
-		$insert = mysql_query(
+		$insert = mysqli_query($orders_db_link,
 			"INSERT INTO orders (title, content, price, customer_id, customer_name, is_completed, is_deleted)
-			 VALUES ('$title', '$content', $price, $customer_id, '$customer_name', FALSE, FALSE);",
-			$orders_db_link
+			 VALUES ('$title', '$content', $price, $customer_id, '$customer_name', FALSE, FALSE);"
 		);
 
-		$id = mysql_insert_id($orders_db_link);
+		$id = mysqli_insert_id($orders_db_link);
 
-		$event = mysql_query(
-			"INSERT INTO events (order_id, type, profit) VALUES ($id, 1, 0);", 
-			$events_db_link
+		$event = mysqli_query($events_db_link,
+			"INSERT INTO events (order_id, type, profit) VALUES ($id, 1, 0);"
 		);
 
 		if (!$update || !$insert || !$event) {
@@ -84,28 +83,25 @@
 		start_transaction();
 
 		$price = _get_order_price($order_id, $orders_db_link);
-		$dec = mysql_query(
+		$dec = mysqli_query($users_db_link,
 			"UPDATE users 
 			 SET order_count = order_count-1,
 			     balance = balance + $price
-			 WHERE id = $customer_id;",
-			$users_db_link
+			 WHERE id = $customer_id;"
 		);
 
-		$cancel = mysql_query(
+		$cancel = mysqli_query($orders_db_link,
 			"UPDATE orders 
 			 SET is_deleted = TRUE 
 			 WHERE customer_id = $customer_id AND 
 			 	   id = $order_id AND 
 			 	   is_completed = FALSE AND 
-			 	   is_deleted = FALSE;",
-			$orders_db_link
+			 	   is_deleted = FALSE;"
 		);
 
-		$canceled = mysql_affected_rows($orders_db_link);
-		$event = mysql_query(
-			"INSERT INTO events (order_id, type, profit) VALUES ($order_id, 2, 0);", 
-			$events_db_link
+		$canceled = mysqli_affected_rows($orders_db_link);
+		$event = mysqli_query($events_db_link,
+			"INSERT INTO events (order_id, type, profit) VALUES ($order_id, 2, 0);"
 		);
 
 		if (!$dec || !$cancel || !$canceled || !$event) {
@@ -147,23 +143,20 @@
 			"UPDATE users 
 			 SET order_count = order_count+1,
 				 balance = balance + $user_portion
-			 WHERE id = $contractor_id;",
-			$users_db_link
+			 WHERE id = $contractor_id;"
 		);
 
-		$take = mysql_query(
+		$take = mysqli_query($orders_db_link,
 			"UPDATE orders 
 			 SET is_completed = TRUE 
 			 WHERE id = $order_id AND 
 				   is_completed = FALSE AND
-				   is_deleted = FALSE;",
-			$orders_db_link
+				   is_deleted = FALSE;"
 		);
 
-		$taken = mysql_affected_rows($orders_db_link);
-		$event = mysql_query(
-			"INSERT INTO events (order_id, type, profit) VALUES ($order_id, 3, $aos_portion);", 
-			$events_db_link
+		$taken = mysqli_affected_rows($orders_db_link);
+		$event = mysqli_query($events_db_link,
+			"INSERT INTO events (order_id, type, profit) VALUES ($order_id, 3, $aos_portion);"
 		);
 
 		if (!$inc || !$take || !$taken || !$event) {
@@ -176,15 +169,15 @@
 	}
 
 	function _get_order_price($order_id, $link) {
-		$result = mysql_query(
-			"SELECT price FROM orders WHERE id = $order_id;", $link
+		$result = mysqli_query($link,
+			"SELECT price FROM orders WHERE id = $order_id;"
 		);
 
-		if (!$result || !mysql_num_rows($result)) {
+		if (!$result || !mysqli_num_rows($result)) {
 			return -1;
 		}
 
-		$row = mysql_fetch_array($result);
+		$row = mysqli_fetch_array($result);
 		return $row[0];
 	}
 
