@@ -121,6 +121,8 @@ aos.register = function() {
 				aos.showFormValidation(aos.lang.something_goes_wrong);
 		}
 	});
+
+	return false;
 };
 
 aos.login = function() {

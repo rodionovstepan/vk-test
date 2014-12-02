@@ -20,7 +20,7 @@
 		<div class="page_welcome_content_title">
 			<b>Присоединяйся</b>, пройдя очень простую процедуру регистрации:
 		</div>
-		<div class="page_welcome_form">
+		<form class="page_welcome_form" action="users.php" method="POST" onsubmit="return false;">
 			<div class="form_validation js_validation" style="display:none;"></div>
 			<div class="form_item">
 				<input type="text" id="username" name="username" maxlength="30" placeholder="Имя пользователя">
@@ -40,8 +40,9 @@
 					<option value="2">Я - исполнитель</option>
 				</select>
 			</div>
+			<input type="hidden" name="act" value="register">
 			<div class="form_item">
-				<button type="button" class="main_button" onclick="aos.register();">Зарегистрироваться</button>
+				<button type="submit" class="main_button" onclick="return aos.register();">Зарегистрироваться</button>
 			</div>
 			<div class="form_item">
 				<a href="enter.php">Войти</a>
