@@ -231,6 +231,7 @@ aos.addOrder = function() {
 		}
 	});
 
+	return false;
 };
 
 aos.orderFadeOut = function($order) {

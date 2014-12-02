@@ -1,4 +1,4 @@
-<div>
+<form action="orders.php" method="POST" onsubmit="return false;">
 	<div class="order_form_validation js_validation" style="display:none;"></div>
 	<div class="form_item order_form_item">
 		<input type="text" id="order_title" placeholder="Заголовок заказа">
@@ -14,8 +14,9 @@
 			измеряется в абстрактной валюте
 		</div>
 	</div>
+	<input type="hidden" name="act" value="add_order">
 	<div class="order_form_submit">
-		<button type="button" class="main_button" onclick="aos.addOrder();">Создать заказ</button>
+		<button type="submit" class="main_button" onclick="return aos.addOrder();">Создать заказ</button>
 		<button type="button" class="def_button" onclick="aos.go('customer.php');">Отмена</button>
 	</div>
 </div>
