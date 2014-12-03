@@ -3,9 +3,8 @@
 	require_once('backend/ajax_handler.php');
 	require_once('backend/handlers/orders_handler.php');
 
-	if (empty($context_user_id)) {
+	if (empty($context_user_id) || empty($context_user_token) || $context_user_token != $token) {
 		invalid_request();
-		exit();
 	}
 
 	if ($act == 'add_order') {

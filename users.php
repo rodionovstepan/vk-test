@@ -4,7 +4,7 @@
 	require_once('backend/handlers/users_handler.php');
 
 	if ($act == 'inc_balance') {
-		if (empty($context_user_id)) {
+		if (empty($context_user_id) || empty($context_user_token) || $context_user_token != $token) {
 			invalid_request();
 		}
 

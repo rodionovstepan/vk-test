@@ -1,6 +1,6 @@
 <?php
 
-	require_once('backend/context.php');
+	require_once('context.php');
 
 	if (!$is_ajax) {
 		header('Location: /');
@@ -8,8 +8,6 @@
 	}
 
 	header('Content-Type: application/json;');
-
-	$act = $_POST['act'];
 
 	function invalid_request() {
 		echo json_encode(array(
@@ -19,5 +17,8 @@
 
 		exit();
 	}
+
+	$act = $_POST['act'];
+	$token = $_SERVER['HTTP_X_AOS_TOKEN'];
 
 ?>
