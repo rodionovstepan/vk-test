@@ -93,21 +93,21 @@
 			$data = array();
 			$metadata = mysqli_stmt_result_metadata($stmt);
 
-	      while ($field = mysqli_fetch_field($metadata)) {
-	         $vars[] = &$data[$field->name];
-	      }
+			while ($field = mysqli_fetch_field($metadata)) {
+				$vars[] = &$data[$field->name];
+			}
 
-	      call_user_func_array(array($stmt, 'bind_result'), _ref_array($vars));
+			call_user_func_array(array($stmt, 'bind_result'), _ref_array($vars));
 
-	      while (mysqli_stmt_fetch($stmt)) {
-	      	$row = array();
+			while (mysqli_stmt_fetch($stmt)) {
+				$row = array();
 
-	      	foreach ($data as $k => $v) {
-	      		$row[$k] = $v;
-	      	}
+				foreach ($data as $k => $v) {
+					$row[$k] = $v;
+				}
 
-	      	$rows[] = $row;
-	      }
+				$rows[] = $row;
+			}
 
 			return $rows;
 		}

@@ -31,7 +31,7 @@
 		$update = update_query(
 			"UPDATE users 
 			 SET order_count = order_count + 1, 
-				  balance = balance - ?
+				 balance = balance - ?
 			 WHERE id = ?",
 			array('di', $price, $customer_id), $users_db_link
 		);
@@ -75,7 +75,7 @@
 			 SET is_deleted = TRUE 
 			 WHERE customer_id = ? AND 
 					 id = ? AND 
-				 	 is_completed = FALSE AND 
+					 is_completed = FALSE AND 
 					 is_deleted = FALSE",
 			array('ii', $customer_id, $order_id), $orders_db_link
 		);
@@ -123,7 +123,7 @@
 		$update_balance = update_query(
 			"UPDATE users 
 			 SET order_count = order_count + 1,
-				  balance = balance + ?
+				 balance = balance + ?
 			 WHERE id = ?",
 			array('di', $user_portion, $contractor_id), $users_db_link
 		);
