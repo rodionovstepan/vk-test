@@ -32,7 +32,7 @@
 		$length = strlen($alpha);
 		$token = '';
 		
-		for ($i = 0; $i < 10; $i++) {
+		for ($i = 0; $i < 20; $i++) {
 		  $token .= $alpha[rand(0, $length - 1)];
 		}
 
