@@ -9,8 +9,8 @@
 
 	if ($act == 'add_order') {
 
-		$title = trim(mysql_real_escape_string(htmlspecialchars($_POST['title'])));
-		$content = trim(mysql_real_escape_string(htmlspecialchars($_POST['content'])));
+		$title = trim(htmlspecialchars($_POST['title']));
+		$content = trim(htmlspecialchars($_POST['content']));
 		$price = $_POST['price'];
 
 		echo json_encode(add_order_handler($title, $content, $price));
