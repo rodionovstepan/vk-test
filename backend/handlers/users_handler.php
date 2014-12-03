@@ -37,12 +37,12 @@
 	}
 
 	function register_handler($username, $email, $pwd, $repwd, $role) {
-		$email_hash = md5($email);
-		$validation = _register_validation($username, $email, $email_hash, $pwd, $repwd, $role);
+		$validation = _register_validation($username, $email, $pwd, $repwd, $role);
 		if (!$validation['success']) {
 			return $validation;
 		}
 
+		$email_hash = md5($email);
 		$result = register_user_query($username, $email, $email_hash, $pwd, $role);
 
 		if ($result > 0) {
@@ -65,7 +65,7 @@
 		);
 	}
 
-	function _register_validation($username, $email, $email_hash, $pwd, $repwd, $role) {
+	function _register_validation($username, $email, $pwd, $repwd, $role) {
 		$usernamelen = strlen($username);
 		if ($usernamelen == 0 || $usernamelen > 30) {
 			return array('success' => false, 'code' => 2);

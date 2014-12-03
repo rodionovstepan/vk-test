@@ -10,7 +10,7 @@
 
 		echo json_encode(inc_balance_handler());
 	} else if ($act == 'login') {
-		$email = trim(mysql_real_escape_string($_POST['email']));
+		$email = $_POST['email'];
 		$pwd = $_POST['pwd'];
 
 		echo json_encode(login_handler($email, $pwd));
