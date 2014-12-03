@@ -42,6 +42,81 @@
 		_query("COMMIT", $link);
 	}
 
+	function update_query($query, $args, $link) {
+		if ($stmt = mysqli_prepare($link, $query)) {
+			call_user_func_array(array($stmt, 'bind_param'), _ref_array($args));
+			mysqli_stmt_execute($stmt);
+
+			if (!mysqli_stmt_affected_rows($stmt)) {
+				return 0;
+			}
+
+			mysqli_stmt_close($stmt);
+			return 1;
+		}
+
+		return 0;
+	}
+
+	function insert_query($query, $args, $link) {
+		if ($stmt = mysqli_prepare($link, $query)) {
+			call_user_func_array(array($stmt, 'bind_param'), _ref_array($args));
+			mysqli_stmt_execute($stmt);
+
+			$id = mysqli_stmt_insert_id($stmt);
+			mysqli_stmt_close($stmt);
+
+			return $id;
+		}
+
+		return 0;
+	}
+
+	function select_query($query, $args, $link) {
+		if ($stmt = mysqli_prepare($link, $query)) {
+
+			if (!empty($args)) {
+				call_user_func_array(array($stmt, 'bind_param'), _ref_array($args));
+			}
+
+			mysqli_stmt_execute($stmt);
+
+			$rows = array();
+			$vars = array();
+			$data = array();
+			$metadata = mysqli_stmt_result_metadata($stmt);
+
+	      while ($field = mysqli_fetch_field($metadata)) {
+	         $vars[] = &$data[$field->name];
+	      }
+
+	      call_user_func_array(array($stmt, 'bind_result'), _ref_array($vars));
+
+	      while (mysqli_stmt_fetch($stmt)) {
+	      	$row = array();
+
+	      	foreach ($data as $k => $v) {
+	      		$row[$k] = $v;
+	      	}
+
+	      	$rows[] = $row;
+	      }
+
+			return $rows;
+		}
+
+		return array();
+	}
+
+	function _ref_array($array) {
+		$refs = array();
+		foreach ($array as $k => $v) {
+			$refs[$k] = &$array[$k];
+		}
+
+		return $refs;
+	}
+
 	function _query($query, $link) {
 		global $users_db_link, $orders_db_link, $events_db_link;
 
