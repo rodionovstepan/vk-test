@@ -7,6 +7,8 @@
 		$_SESSION['uname'] = $user['username'];
 		$_SESSION['urole'] = $user['role'];
 		$_SESSION['utoken'] = _generate_token();
+
+		session_regenerate_id(true);
 	}
 
 	function logout_user() {
@@ -21,6 +23,7 @@
 			unset($_SESSION['uname']);
 			unset($_SESSION['utoken']);
 
+			session_regenerate_id();
 			session_destroy();
 		}
 	}
