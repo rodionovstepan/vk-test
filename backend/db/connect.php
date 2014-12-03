@@ -31,15 +31,15 @@
 	}
 
 	function start_transaction($link = NULL) {
-		_query("START TRANSACTION", $link);
+		_query_all("START TRANSACTION", $link);
 	}
 
 	function rollback_transaction($link = NULL) {
-		_query("ROLLBACK", $link);
+		_query_all("ROLLBACK", $link);
 	}
 
 	function commit_transaction($link = NULL) {
-		_query("COMMIT", $link);
+		_query_all("COMMIT", $link);
 	}
 
 	function update_query($query, $args, $link) {
@@ -117,7 +117,7 @@
 		return $refs;
 	}
 
-	function _query($query, $link) {
+	function _query_all($query, $link) {
 		global $users_db_link, $orders_db_link, $events_db_link;
 
 		if (isset($link)) {
