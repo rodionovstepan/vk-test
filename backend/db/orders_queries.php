@@ -3,45 +3,24 @@
 	function get_customer_active_orders_query($customer_id) {
 		global $orders_db_link;
 
-		$result = mysqli_query($orders_db_link,
+		return select_query(
 			"SELECT id, title, content, price, customer_id, customer_name
 			 FROM orders
-			 WHERE is_completed = FALSE AND is_deleted = FALSE AND customer_id = $customer_id 
-			 ORDER BY id DESC;"
+			 WHERE is_completed = FALSE AND is_deleted = FALSE AND customer_id = ? 
+			 ORDER BY id DESC",
+			array('i', $customer_id), $orders_db_link
 		);
-
-		if (!$result) {
-			return array();
-		}
-
-		$rows = array();
-		while($row = mysqli_fetch_assoc($result)) {
-			$rows[] = $row;
-		}
-
-		return $rows;
 	}
 
 	function get_contractor_active_orders_query() {
 		global $orders_db_link;
 
-		$result = mysqli_query($orders_db_link, 
+		return select_query(
 			"SELECT id, title, content, price, customer_id, customer_name
 			 FROM orders
 			 WHERE is_completed = FALSE AND is_deleted = FALSE 
-			 ORDER BY id DESC;"
+			 ORDER BY id DESC", NULL, $orders_db_link
 		);
-
-		if (!$result) {
-			return array();
-		}
-
-		$rows = array();
-		while($row = mysqli_fetch_assoc($result)) {
-			$rows[] = $row;
-		}
-
-		return $rows;
 	}
 
 	function add_order_query($customer_id, $customer_name, $title, $content, $price) {
@@ -49,32 +28,32 @@
 
 		start_transaction();
 
-		$update = mysqli_query($users_db_link,
+		$update = update_query(
 			"UPDATE users 
-			 SET order_count = order_count+1, 
-			 	 balance = balance-$price 
-			 WHERE id = $customer_id;"
+			 SET order_count = order_count + 1, 
+				  balance = balance - ?
+			 WHERE id = ?",
+			array('di', $price, $customer_id), $users_db_link
 		);
 
-		$insert = mysqli_query($orders_db_link,
+		$order_id = insert_query(
 			"INSERT INTO orders (title, content, price, customer_id, customer_name, is_completed, is_deleted)
-			 VALUES ('$title', '$content', $price, $customer_id, '$customer_name', FALSE, FALSE);"
+			 VALUES (?, ?, ?, ?, ?, FALSE, FALSE)",
+			array('ssdis', $title, $content, $price, $customer_id, $customer_name), $orders_db_link
 		);
 
-		$id = mysqli_insert_id($orders_db_link);
-
-		$event = mysqli_query($events_db_link,
-			"INSERT INTO events (order_id, type, profit) VALUES ($id, 1, 0);"
+		$event = insert_query(
+			"INSERT INTO events (order_id, type, profit) VALUES (?, 1, 0)",
+			array('i', $order_id), $events_db_link
 		);
 
-		if (!$update || !$insert || !$event) {
+		if (!$update || $order_id <= 0 || !$event) {
 			rollback_transaction();
 			return 0;
 		}
 
 		commit_transaction();
-		
-		return $id;
+		return $order_id;
 	}
 
 	function cancel_order_query($customer_id, $order_id) {
@@ -83,28 +62,30 @@
 		start_transaction();
 
 		$price = _get_order_price($order_id, $orders_db_link);
-		$dec = mysqli_query($users_db_link,
+		$cancel_balance = update_query(
 			"UPDATE users 
-			 SET order_count = order_count-1,
-			     balance = balance + $price
-			 WHERE id = $customer_id;"
+			 SET order_count = order_count - 1,
+				  balance = balance + ?
+			 WHERE id = ?",
+			array('di', $price, $customer_id), $users_db_link
 		);
 
-		$cancel = mysqli_query($orders_db_link,
+		$cancel_order = update_query(
 			"UPDATE orders 
 			 SET is_deleted = TRUE 
-			 WHERE customer_id = $customer_id AND 
-			 	   id = $order_id AND 
-			 	   is_completed = FALSE AND 
-			 	   is_deleted = FALSE;"
+			 WHERE customer_id = ? AND 
+					 id = ? AND 
+				 	 is_completed = FALSE AND 
+					 is_deleted = FALSE",
+			array('ii', $customer_id, $order_id), $orders_db_link
 		);
 
-		$canceled = mysqli_affected_rows($orders_db_link);
-		$event = mysqli_query($events_db_link,
-			"INSERT INTO events (order_id, type, profit) VALUES ($order_id, 2, 0);"
+		$event = insert_query(
+			"INSERT INTO events (order_id, type, profit) VALUES (?, 2, 0)",
+			array('i', $order_id), $events_db_link
 		);
 
-		if (!$dec || !$cancel || !$canceled || !$event) {
+		if (!$cancel_balance || !$cancel_order || !$event) {
 			rollback_transaction();
 			return 0;
 		}
@@ -139,27 +120,29 @@
 			return -1;
 		}
 
-		$inc = mysqli_query($users_db_link,
+		$update_balance = update_query(
 			"UPDATE users 
-			 SET order_count = order_count+1,
-				 balance = balance + $user_portion
-			 WHERE id = $contractor_id;"
+			 SET order_count = order_count + 1,
+				  balance = balance + ?
+			 WHERE id = ?",
+			array('di', $user_portion, $contractor_id), $users_db_link
 		);
 
-		$take = mysqli_query($orders_db_link,
+		$update_order = update_query(
 			"UPDATE orders 
 			 SET is_completed = TRUE 
-			 WHERE id = $order_id AND 
-				   is_completed = FALSE AND
-				   is_deleted = FALSE;"
+			 WHERE id = ? AND 
+					 is_completed = FALSE AND
+					 is_deleted = FALSE",
+			array('i', $order_id), $orders_db_link
 		);
 
-		$taken = mysqli_affected_rows($orders_db_link);
-		$event = mysqli_query($events_db_link,
-			"INSERT INTO events (order_id, type, profit) VALUES ($order_id, 3, $aos_portion);"
+		$event = insert_query(
+			"INSERT INTO events (order_id, type, profit) VALUES (?, 3, ?)",
+			array('id', $order_id, $aos_portion), $events_db_link
 		);
 
-		if (!$inc || !$take || !$taken || !$event) {
+		if (!$update_balance || !$update_order || !$event) {
 			rollback_transaction();
 			return 0;
 		}
@@ -169,29 +152,29 @@
 	}
 
 	function _get_order_price($order_id, $link) {
-		$result = mysqli_query($link,
-			"SELECT price FROM orders WHERE id = $order_id;"
+		$select = select_query(
+			"SELECT price FROM orders WHERE id = ?",
+			array('i', $order_id), $link
 		);
 
-		if (!$result || !mysqli_num_rows($result)) {
+		if (empty($select)) {
 			return -1;
 		}
 
-		$row = mysqli_fetch_array($result);
-		return $row[0];
+		return $select[0]['price'];
 	}
 
 	function _get_user_balance($user_id, $link) {
-		$result = mysqli_query($link,
-			"SELECT balance FROM users WHERE id = $user_id;"
+		$select = select_query(
+			"SELECT balance FROM users WHERE id = ?",
+			array('i', $user_id), $link
 		);
 
-		if (!$result || !mysqli_num_rows($result)) {
+		if (empty($select)) {
 			return -1;
 		}
 
-		$row = mysqli_fetch_array($result);
-		return $row[0];
+		return $select[0]['balance'];
 	}
 
 ?>

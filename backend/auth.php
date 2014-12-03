@@ -23,7 +23,6 @@
 			unset($_SESSION['uname']);
 			unset($_SESSION['utoken']);
 
-			session_regenerate_id(true);
 			session_destroy();
 		}
 	}
