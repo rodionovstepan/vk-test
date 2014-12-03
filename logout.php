@@ -1,9 +1,11 @@
 <?php
 
 	require_once('backend/auth.php');
-
 	logout_user();
 
-	header('Location: /');
-
 ?>
+<!doctype html>
+<html>
+<head><script type="text/javascript">location = '/';</script></head>
+<body></body>
+</html>
