@@ -8,7 +8,7 @@
       <script type="text/javascript">
          $.ajaxSetup({
             headers: {
-               'X-AOS-Token': '<?= $context_user_token ?>'
+               'X-AOS-Token': '<?=htmlspecialchars($context_user_token)?>'
             }
          });
       </script>
