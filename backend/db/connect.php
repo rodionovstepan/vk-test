@@ -44,10 +44,11 @@
 
 	function update_query($query, $args, $link) {
 		if ($stmt = mysqli_prepare($link, $query)) {
-			call_user_func_array(array($stmt, 'bind_param'), _ref_array($args));
-			mysqli_stmt_execute($stmt);
+			if (!empty($args)) {
+				call_user_func_array(array($stmt, 'bind_param'), _ref_array($args));
+			}
 
-			if (!mysqli_stmt_affected_rows($stmt)) {
+			if (!mysqli_stmt_execute($stmt) || !mysqli_stmt_affected_rows($stmt)) {
 				return 0;
 			}
 
@@ -60,8 +61,13 @@
 
 	function insert_query($query, $args, $link) {
 		if ($stmt = mysqli_prepare($link, $query)) {
-			call_user_func_array(array($stmt, 'bind_param'), _ref_array($args));
-			mysqli_stmt_execute($stmt);
+			if (!empty($args)) {
+				call_user_func_array(array($stmt, 'bind_param'), _ref_array($args));
+			}
+			
+			if (!mysqli_stmt_execute($stmt)) {
+				return 0;
+			}
 
 			$id = mysqli_stmt_insert_id($stmt);
 			mysqli_stmt_close($stmt);
@@ -74,12 +80,13 @@
 
 	function select_query($query, $args, $link) {
 		if ($stmt = mysqli_prepare($link, $query)) {
-
 			if (!empty($args)) {
 				call_user_func_array(array($stmt, 'bind_param'), _ref_array($args));
 			}
 
-			mysqli_stmt_execute($stmt);
+			if (!mysqli_stmt_execute($stmt)) {
+				return array();
+			}
 
 			$rows = array();
 			$vars = array();
@@ -106,15 +113,6 @@
 		}
 
 		return array();
-	}
-
-	function _ref_array($array) {
-		$refs = array();
-		foreach ($array as $k => $v) {
-			$refs[$k] = &$array[$k];
-		}
-
-		return $refs;
 	}
 
 	function _query_all($query, $link) {
@@ -144,6 +142,15 @@
 		mysqli_set_charset($link, 'utf-8');
 
 		return $link;
+	}
+
+	function _ref_array($array) {
+		$refs = array();
+		foreach ($array as $k => $v) {
+			$refs[$k] = &$array[$k];
+		}
+
+		return $refs;
 	}
 
 ?>
